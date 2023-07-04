@@ -3,7 +3,7 @@
 
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-import sqlite3
+import sqlite3 
 import pandas as pd
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 import folium
