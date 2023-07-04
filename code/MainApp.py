@@ -8,6 +8,7 @@ import pandas as pd
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 import folium
 
+
 def main():
     app = QtWidgets.QApplication(sys.argv)
     main_window = QtWidgets.QMainWindow()
