@@ -1,6 +1,11 @@
+import datetime
+import random
 import sqlite3
 
 from faker import Faker
+
+from class_plan_date import PlanDate
+
 
 class DBConnector:
     _instance = None
@@ -36,11 +41,12 @@ class DBConnector:
     ## CREATE TABLES ======================================================================= ##
     def create_tables(self):
         c = self.start_conn()
-        c.execute("""
+        c.executescript("""
             DROP TABLE IF EXISTS tb_location;
             CREATE TABLE "tb_location" (
                 "id"	INTEGER,
                 "name"	TEXT NOT NULL,
+                "category"	INTEGER NOT NULL,
                 "w_do"	REAL NOT NULL,
                 "g_do"	REAL NOT NULL,
                 "address"	TEXT NOT NULL,
@@ -64,16 +70,50 @@ class DBConnector:
                 PRIMARY KEY("id" AUTOINCREMENT)
             );
         """)
-
+        self.commit_db()
+        self.end_conn()
 
     ## Timeline ======================================================================= ##
+    def find_all_timeline(self):
+        c = self.start_conn()
+        c.execute("select ")
+        self.end_conn()
 
     ## Location ======================================================================= ##
-    ## PlanDate ======================================================================= ##
 
+
+    def find_all_location(self):
+        c = self.start_conn()
+        c.execute("select ")
+        self.end_conn()
+
+    ## PlanDate ======================================================================= ##
+    def find_all_plan_date(self):
+        c = self.start_conn()
+        rows_data = c.execute("select * from tb_plan_date").fetchall()
+        if len(rows_data) == 0:
+            return None
+
+        find_result_list = list()
+        for row in rows_data:
+            find_result_list.append(PlanDate(*row))
+        self.end_conn()
+        return rows_data
+
+    def make_fake_date_data(self):
+        c = self.start_conn()
+
+        for i in range(1000):
+            start_date_obj = self.faker.date_between()
+            day_length = random.randint(2, 10)
+            end_date_obj = start_date_obj + datetime.timedelta(days=day_length)
+            end_date_str = PlanDate.date_obj_to_str(end_date_obj)
+            c.execute('insert into tb_plan_date(start, end) values (?, ?)',
+                      (PlanDate.date_obj_to_str(start_date_obj), end_date_str,))
+        self.commit_db()
+
+        self.end_conn()
 
 
 if __name__ == '__main__':
     conn = DBConnector(test_option=False)
-    conn.start_conn()
-    conn.end_conn()
