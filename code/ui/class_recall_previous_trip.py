@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget
 
-from ui_recall_previous_trip import Ui_recall_proevious_trip
+from ui.ui_recall_previous_trip import Ui_recall_proevious_trip
 
 
 class RecallPreviousTrip(QWidget, Ui_recall_proevious_trip):
