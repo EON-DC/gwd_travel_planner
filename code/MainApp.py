@@ -8,11 +8,15 @@ import pandas as pd
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 import folium
 
+import class_mainwindow
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    main_window = QtWidgets.QMainWindow()
-    main_window.show()
+    main_window = class_mainwindow.MainWindow()
+    # main_window.start_page.show()
+    # main_window.first_trip.show()
+    # main_window.prev_trip.show()
+    main_window.select_planner.show()
 
     sys.excepthook = lambda exctype, value, traceback: show_error_message(str(value), traceback)
 
