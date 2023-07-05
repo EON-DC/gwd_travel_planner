@@ -7,3 +7,4 @@ if __name__ == '__main__':
     os.system('pyuic5 ui/recommended_place.ui -o ui/ui_recommended_place.py')
     os.system('pyuic5 ui/select_place_list.ui -o ui/ui_select_place_list.py')
     os.system('pyuic5 ui/select_schedule.ui -o ui/ui_select_schedule.py')
+
