@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget
 
-from ui_start_page import Ui_start_page
+from ui.ui_start_page import Ui_start_page
 
 
 class StartPage(QWidget, Ui_start_page):
