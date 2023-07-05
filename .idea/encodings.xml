@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/csv_data/강원도 데이터.csv" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/csv_data/강원도 동해시_관광명소 현황_20221206.csv" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/csv_data/강원도 동해시_숙박정보_20221019.csv" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/csv_data/강원도 원주시_원주시청홈페이지 관광명소_20210929.csv" charset="x-windows-949" />

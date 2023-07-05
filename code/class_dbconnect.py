@@ -67,7 +67,7 @@ class DBConnector:
             CREATE TABLE "tb_timeline" (
                 "id"	INTEGER,
                 "plan_date_id"	INTEGER NOT NULL,
-                "location_id_list"	INTEGER NOT NULL,
+                "location_id_list"	TEXT NOT NULL,
                 "username"	TEXT NOT NULL,
                 "trip_name"	TEXT NOT NULL,
                 PRIMARY KEY("id" AUTOINCREMENT)
@@ -77,6 +77,30 @@ class DBConnector:
         self.end_conn()
 
     ## Timeline ======================================================================= ##
+    def insert_timeline(self, timeline_obj:TimeLine):
+        c = self.start_conn()
+        plan_date_object = timeline_obj.plan_date
+        plan_date_object:PlanDate
+        plan_date_id = plan_date_object.plan_date_id
+
+        location_object_list = timeline_obj.location_list
+        location_object_list: Location
+        location_id_list = []
+        for list_object in location_object_list:
+            tmp_list = []
+            for location_object in list_object:
+                tmp_list.append(location_object.location_id)
+            location_id_list.append(tmp_list)
+
+        username = timeline_obj.username
+        trip_name = timeline_obj.trip_name
+
+        c.execute('insert into tb_timeline(plan_date_id, location_id_list, username, trip_name) values (?, ?, ?, ?)', \
+                             (plan_date_id, str(location_id_list), username, trip_name))
+
+        self.commit_db()
+        self.end_conn()
+
     def find_all_timeline(self):
         c = self.start_conn()
         rows_data = c.execute("select * from tb_timeline").fetchall()
@@ -134,6 +158,18 @@ class DBConnector:
         return result_list
 
     ## Location ======================================================================= ##
+    def insert_location(self, location_obj):
+        c = self.start_conn()
+        name = location_obj.name
+        category = location_obj.category
+        address = location_obj.address
+        w_do = location_obj.w_do
+        g_do = location_obj.g_do
+        description = location_obj.description
+        c.execute('insert into tb_location(name, category, w_do, g_do, address, description) values (?, ?, ?, ?, ?, ?)',\
+                  (name, category, address, w_do, g_do, description))
+        self.commit_db()
+        self.end_conn()
 
     def find_location_by_id(self, location_id):
         c = self.start_conn()
@@ -167,6 +203,13 @@ class DBConnector:
         return rows_data
 
     ## PlanDate ======================================================================= ##
+    def insert_plan_date(self, plan_date_obj:PlanDate):
+        c = self.start_conn()
+        start = plan_date_obj.date_obj_to_str(plan_date_obj.start_date)
+        end = plan_date_obj.date_obj_to_str(plan_date_obj.end_date)
+        c.execute('insert into tb_plan_date(start, end) values (?, ?)', (start, end))
+        self.commit_db()
+        self.end_conn()
 
     def find_plan_date_by_id(self, plan_date_id):
         c = self.start_conn()
@@ -244,10 +287,20 @@ if __name__ == '__main__':
     conn = DBConnector(test_option=False)
     conn.create_tables()
     conn.make_fake_date_data()
-    for plan_date in conn.find_all_plan_date():
-        print(plan_date)
-    for location in conn.find_all_location():
-        print(location)
-    for timeline in conn.find_all_timeline():
-        print(timeline)
+    plan_date = PlanDate(1, '2023-04-05', '2023-04-08')
+    location = Location(7, '망상해수욕장', '1', '1.11111', '2.22222', '강원도어쩌구', '망상하는해수욕장')
+    location2 = Location(3, '해수욕장', '1', '1.41111', '2.62222', '강원도저쩌구', '그냥해수욕장')
+    location3 = Location(85, '오죽헌', '1', '1.41111', '2.62222', '강원도머시기', '오죽헌이올시다')
+    # # conn.insert_plan_date(plan_date)
+    # # conn.insert_location(location)
+    # # print(a)
+    timeline = TimeLine(1, plan_date, [[location], [location2, location3], []], '사용자', '사용자여행')
+    conn.insert_timeline(timeline)
+    # conn.insert_timeline(timeline)
+    # for plan_date in conn.find_all_plan_date():
+    #     print(plan_date)
+    # for location in conn.find_all_location():
+    #     print(location)
+    # for timeline in conn.find_all_timeline():
+    #     print(timeline)
 
