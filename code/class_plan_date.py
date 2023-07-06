@@ -20,3 +20,9 @@ class PlanDate:
         self.start_date = PlanDate.str_date_parser(start_date_str)
         self.end_date = PlanDate.str_date_parser(end_date_str)
 
+    def __str__(self):
+        return f"{self.__repr__()}"
+
+    def __repr__(self):
+        return f"{self.__dict__}"
+

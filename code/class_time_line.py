@@ -5,3 +5,12 @@ class TimeLine:
         self.location_list = location_list
         self.username = username
         self.trip_name = trip_name
+    def __str__(self):
+        return f"{self.__repr__()}"
+
+    def __repr__(self):
+        return f"{self.__dict__}"
+
+    # 솔팅 함수 추가
+
+
