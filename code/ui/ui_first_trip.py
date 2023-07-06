@@ -104,6 +104,7 @@ class Ui_first_trip(object):
         self.lineedit_schedule_name = QtWidgets.QLineEdit(self.schedule_input_frame_2)
         self.lineedit_schedule_name.setMinimumSize(QtCore.QSize(520, 50))
         self.lineedit_schedule_name.setMaximumSize(QtCore.QSize(520, 50))
+        self.lineedit_schedule_name.setText("")
         self.lineedit_schedule_name.setObjectName("lineedit_schedule_name")
         self.verticalLayout_2.addWidget(self.lineedit_schedule_name)
         self.horizontalLayout_3.addWidget(self.schedule_input_frame_2)
@@ -174,5 +175,4 @@ class Ui_first_trip(object):
     def retranslateUi(self, first_trip):
         _translate = QtCore.QCoreApplication.translate
         first_trip.setWindowTitle(_translate("first_trip", "Form"))
-        self.text_label.setText(_translate("first_trip", "<html><head/><body><p align=\"center\">이번 여행의 제목은 무엇인가요?</p><p align=\"center\"><span style=\" font-size:12pt;\">스케줄명을 입력해주세요.</span></p></body></html>"))
-        self.lineedit_schedule_name.setText(_translate("first_trip", "내용을 입력해주세요."))
+        self.text_label.setText(_translate("first_trip", "<html><head/><body><p align=\"center\">이번 여행의 제목은 무엇인가요?</p><p align=\"center\"><span style=\" font-size:12pt;\">스케줄명을 입력하시고 엔터를 눌러주세요.</span></p></body></html>"))
