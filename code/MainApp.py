@@ -3,8 +3,7 @@
 
 import sys
 
-from PyQt5 import QtWidgets
-
+from PyQt5 import QtCore, QtGui, QtWidgets
 import class_mainwindow
 
 
