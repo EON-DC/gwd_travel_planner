@@ -175,4 +175,4 @@ class Ui_first_trip(object):
     def retranslateUi(self, first_trip):
         _translate = QtCore.QCoreApplication.translate
         first_trip.setWindowTitle(_translate("first_trip", "Form"))
-        self.text_label.setText(_translate("first_trip", "<html><head/><body><p align=\"center\">이번 여행의 제목은 무엇인가요?</p><p align=\"center\"><span style=\" font-size:12pt;\">스케줄명을 입력하시고 엔터를 눌러주세요.</span></p></body></html>"))
+        self.text_label.setText(_translate("first_trip", "<html><head/><body><p align=\"center\">이번 여행의 제목은 무엇인가요?</p><p align=\"center\"><span style=\" font-size:12pt;\">스케줄명은 총 10글자이내로 작성해주세요.</span></p></body></html>"))
