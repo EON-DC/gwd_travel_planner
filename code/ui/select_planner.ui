@@ -726,18 +726,18 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>455</width>
                    <height>625</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>455</width>
                    <height>625</height>
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>3</number>
                  </property>
                  <widget class="QWidget" name="page_select_date">
                   <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1076,13 +1076,13 @@
                        <widget class="QPushButton" name="btn_selection_1">
                         <property name="minimumSize">
                          <size>
-                          <width>100</width>
+                          <width>425</width>
                           <height>50</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>16777215</width>
+                          <width>425</width>
                           <height>50</height>
                          </size>
                         </property>
@@ -2176,6 +2176,9 @@
                                    <height>90</height>
                                   </size>
                                  </property>
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: rgb(164, 111, 255);</string>
+                                 </property>
                                  <property name="frameShape">
                                   <enum>QFrame::StyledPanel</enum>
                                  </property>
@@ -2581,6 +2584,9 @@
                                    <height>90</height>
                                   </size>
                                  </property>
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: rgb(255, 90, 206);</string>
+                                 </property>
                                  <property name="frameShape">
                                   <enum>QFrame::StyledPanel</enum>
                                  </property>
@@ -2655,13 +2661,13 @@
                        <widget class="QPushButton" name="btn_selection_2">
                         <property name="minimumSize">
                          <size>
-                          <width>100</width>
+                          <width>425</width>
                           <height>50</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>16777215</width>
+                          <width>425</width>
                           <height>50</height>
                          </size>
                         </property>
@@ -2876,19 +2882,58 @@
                           <number>0</number>
                          </property>
                          <item>
-                          <widget class="QListWidget" name="listWidget_rec_location">
+                          <widget class="QFrame" name="frame_61">
                            <property name="minimumSize">
                             <size>
-                             <width>430</width>
-                             <height>425</height>
+                             <width>425</width>
+                             <height>428</height>
                             </size>
                            </property>
                            <property name="maximumSize">
                             <size>
-                             <width>430</width>
-                             <height>425</height>
+                             <width>425</width>
+                             <height>428</height>
                             </size>
                            </property>
+                           <property name="frameShape">
+                            <enum>QFrame::StyledPanel</enum>
+                           </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Raised</enum>
+                           </property>
+                           <layout class="QHBoxLayout" name="horizontalLayout_42">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>0</number>
+                            </property>
+                            <item>
+                             <widget class="QListWidget" name="listWidget_rec_location">
+                              <property name="minimumSize">
+                               <size>
+                                <width>420</width>
+                                <height>425</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>420</width>
+                                <height>425</height>
+                               </size>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
                           </widget>
                          </item>
                         </layout>
@@ -2901,13 +2946,13 @@
                     <widget class="QFrame" name="frame_29">
                      <property name="minimumSize">
                       <size>
-                       <width>0</width>
+                       <width>455</width>
                        <height>86</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>16777215</width>
+                       <width>455</width>
                        <height>86</height>
                       </size>
                      </property>
@@ -2918,6 +2963,9 @@
                       <enum>QFrame::Raised</enum>
                      </property>
                      <layout class="QHBoxLayout" name="horizontalLayout_17">
+                      <property name="rightMargin">
+                       <number>9</number>
+                      </property>
                       <property name="bottomMargin">
                        <number>20</number>
                       </property>
@@ -2925,13 +2973,13 @@
                        <widget class="QPushButton" name="btn_selection_3">
                         <property name="minimumSize">
                          <size>
-                          <width>100</width>
+                          <width>425</width>
                           <height>50</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>16777215</width>
+                          <width>425</width>
                           <height>50</height>
                          </size>
                         </property>
@@ -3056,28 +3104,67 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QListWidget" name="listWidget_select_list">
+                       <widget class="QFrame" name="frame_62">
                         <property name="minimumSize">
                          <size>
-                          <width>430</width>
-                          <height>465</height>
+                          <width>425</width>
+                          <height>0</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>430</width>
-                          <height>465</height>
+                          <width>425</width>
+                          <height>16777215</height>
                          </size>
                         </property>
-                        <property name="acceptDrops">
-                         <bool>true</bool>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
                         </property>
-                        <property name="dragEnabled">
-                         <bool>true</bool>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
                         </property>
-                        <property name="defaultDropAction">
-                         <enum>Qt::MoveAction</enum>
-                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_43">
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QListWidget" name="listWidget_select_list">
+                           <property name="minimumSize">
+                            <size>
+                             <width>420</width>
+                             <height>465</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>420</width>
+                             <height>465</height>
+                            </size>
+                           </property>
+                           <property name="acceptDrops">
+                            <bool>true</bool>
+                           </property>
+                           <property name="dragEnabled">
+                            <bool>true</bool>
+                           </property>
+                           <property name="defaultDropAction">
+                            <enum>Qt::MoveAction</enum>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
                        </widget>
                       </item>
                      </layout>
@@ -3087,13 +3174,13 @@
                     <widget class="QFrame" name="frame_30">
                      <property name="minimumSize">
                       <size>
-                       <width>0</width>
+                       <width>455</width>
                        <height>86</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>16777215</width>
+                       <width>455</width>
                        <height>86</height>
                       </size>
                      </property>
@@ -3111,13 +3198,13 @@
                        <widget class="QPushButton" name="btn_selection_4">
                         <property name="minimumSize">
                          <size>
-                          <width>100</width>
+                          <width>425</width>
                           <height>50</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>16777215</width>
+                          <width>425</width>
                           <height>50</height>
                          </size>
                         </property>
@@ -3128,7 +3215,7 @@
                          </font>
                         </property>
                         <property name="text">
-                         <string>선택완료</string>
+                         <string>일정 저장</string>
                         </property>
                        </widget>
                       </item>
