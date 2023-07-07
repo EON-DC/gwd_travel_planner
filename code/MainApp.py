@@ -11,6 +11,7 @@ def main():
     app = QtWidgets.QApplication(sys.argv)
     main_window = class_mainwindow.MainWindow()
     main_window.start_page.show()
+    main_window.start_page.show()
     # main_window.first_trip.show()
     # main_window.prev_trip.show()
     # main_window.select_planner.show()

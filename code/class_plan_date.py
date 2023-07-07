@@ -7,6 +7,7 @@ class PlanDate:
     def str_date_parser(date_str):
         # date_str 형태 : 'YYYY-mm-dd'
         datetime_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+        # datetime_obj = datetime.datetime.isoformat(date_str)
         return datetime_obj
 
     @staticmethod

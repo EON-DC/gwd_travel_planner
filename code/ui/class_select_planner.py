@@ -17,7 +17,6 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.rec_btn_list = [self.btn_rec_attraction, self.btn_rec_hotel]
 
         self.test_init()
-        self.set_location_item_lsit()
 
 
         # 왼쪽 상단 버튼 초기 숨김

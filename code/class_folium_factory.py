@@ -76,5 +76,5 @@ if __name__ == '__main__':
 
     # factory = FoliumMapFactory(location, [location2, location3, location4])
     factory = FoliumMapFactory()
-    # with open('test.html', 'w') as file:
-    #     file.write(factory.make_html())
+    with open('test.html', 'w') as file:
+        file.write(factory.make_html())

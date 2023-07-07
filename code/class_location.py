@@ -11,11 +11,25 @@ class Location:
         self.g_do = g_do
         self.address = address
         self.description = description
+        # self.category_initialize()
 
-    # def __str__(self):
-    #     return f"{self.__repr__()}"
-    #
-    # def __repr__(self):
-    #     return f"{self.__dict__}"
+    def category_initialize(self):
+        if isinstance(self.category, int):
+            if self.category == 0:
+                self.category = '숙소'
+            else:
+                self.category = '명소'
+
+        elif isinstance(self.category, str):
+            if self.category == '0':
+                self.category = '숙소'
+            else:
+                self.category = '명소'
+
+    def __str__(self):
+        return f"{self.__repr__()}"
+
+    def __repr__(self):
+        return f"{self.__dict__}"
 
 

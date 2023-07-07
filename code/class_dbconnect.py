@@ -146,11 +146,11 @@ class DBConnector:
         self.end_conn()
         return created_date_obj
 
-    def create_time_line_obj(self, username_str: str,
-                             location_list: list[Location],
+    def create_time_line_obj(self, location_list: list[Location],
                              start_date_str: str,
                              end_date_str: str,
-                             trip_name: str) -> TimeLine:
+                             trip_name: str,
+                             username_str = 'username') -> TimeLine:
         plan_date = self.create_plan_date_obj(start_date_str, end_date_str)
         c = self.start_conn()
         last_row = c.execute('select * from tb_timeline order by id desc limit 1').fetchone()
@@ -243,6 +243,11 @@ class DBConnector:
         c = self.start_conn()
         name = location_obj.name
         category = location_obj.category
+        if isinstance(category, str):
+            if category == '숙소':
+                category = 0
+            else:
+                category = 1
         address = location_obj.address
         w_do = location_obj.w_do
         g_do = location_obj.g_do
@@ -268,7 +273,7 @@ class DBConnector:
         # location_id, name, category, w_do, g_do, address, description
         if len(rows_data) == 0:
             return None
-        category_list = ['미정', '숙소', '명소']
+        category_list = ['숙소', '명소']
         find_result_list = list()
         for row in rows_data:
             l_id = row[0]
@@ -281,7 +286,7 @@ class DBConnector:
             description = row[6]
             find_result_list.append(Location(l_id, name, category, w_do, g_do, address, description))
         self.end_conn()
-        return rows_data
+        return find_result_list
 
     def find_location_list_by_name(self, location_name_str: str) -> list:
         location_list = list()
@@ -293,6 +298,20 @@ class DBConnector:
 
         for i in locations:
             location_list.append(i[1])
+        self.end_conn()
+        return location_list
+
+    # 장소이름 혹은 주소에 검색어가 포함된 결과 추출
+    def find_location_list_by_name_or_address(self, location_name_str: str) -> list:
+        location_list = list()
+        c = self.start_conn()
+        # print(c.execute("select * from tb_location where name like ?", ("%수민%", )).fetchall())
+        locations = c.execute("select * from tb_location where name like ? or address like ?", (f"%{location_name_str}%", f"%{location_name_str}%")).fetchall()
+        if len(locations) == 0:
+            return None
+
+        for i in locations:
+            location_list.append((i[1], i[5]))
         self.end_conn()
         return location_list
 
@@ -358,7 +377,7 @@ class DBConnector:
             c.execute('''
             insert into tb_location(name, category, w_do, g_do, address, description) 
             values (?, ?, ?, ?, ?, ?)''',
-                      (fake_location_name, random_category_num, fake_address, w_do, k_do, fake_description,))
+                      (fake_location_name, random_category_num, w_do, k_do, fake_address, fake_description,))
 
             # fake timeline
             # 인자 timeline_id, plan_date, location_list, username, trip_name
@@ -387,6 +406,33 @@ class DBConnector:
         self.commit_db()
         self.end_conn()
 
+    #ui측 전달함수===========================================================
+    # [(이름1, 주소1), (이름2, 주소2)] 형태로 전달 필요한지 확인
+    def get_recommended_hotel(self):
+        all_locations = self.find_all_location()
+        result_list = list()
+        for location_ in all_locations:
+            if location_.category == '숙소':
+                result_list.append(location_)
+        recommended_hotel_list = list()
+        for obj in result_list:
+            obj: Location
+            name, address = obj.name, obj.address
+            recommended_hotel_list.append((name, address))
+        return recommended_hotel_list
+
+    def get_recommended_attraction(self):
+        all_locations = self.find_all_location()
+        result_list = list()
+        for location_ in all_locations:
+            if location_.category == '명소':
+                result_list.append(location_)
+        recommended_attraction_list = list()
+        for obj in result_list:
+            obj: Location
+            name, address = obj.name, obj.address
+            recommended_attraction_list.append((name, address))
+        return recommended_attraction_list
 
 if __name__ == '__main__':
     conn = DBConnector(test_option=True)
@@ -411,11 +457,10 @@ if __name__ == '__main__':
     # # print(l)
     # for row in l[:10]:
     #     print(row)
-    location = Location(90, '망상해수욕장', '1', '1.11111', '2.22222', '강원도어쩌구', '망상하는해수욕장')
-    location2 = Location(55, '해수욕장', '1', '1.41111', '2.62222', '강원도저쩌구', '그냥해수욕장')
-    location3 = Location(23, '오죽헌', '1', '1.41111', '2.62222', '강원도머시기', '오죽헌이올시다')
+    # location = Location(90, '망상해수욕장', '1', '1.11111', '2.22222', '강원도어쩌구', '망상하는해수욕장')
+    # location2 = Location(55, '해수욕장', '1', '1.41111', '2.62222', '강원도저쩌구', '그냥해수욕장')
+    # location3 = Location(23, '오죽헌', '1', '1.41111', '2.62222', '강원도머시기', '오죽헌이올시다')
 
-    # print(conn.find_recent_timelines())
 
     # print(conn.delete_location_by_id(998))
     # print(conn.delete_timeline_by_id(1001))
@@ -427,4 +472,26 @@ if __name__ == '__main__':
     # print(conn.find_timeline_by_id(999).username)
 
     # print(conn.create_plan_date_obj('2023-07-06', '2023-07-09'))
-    print(conn.create_time_line_obj('레이디가가,', ([location3], [location2, location], []), '2023-08-10', '2023-08-13', '여행이름'))
+    # print(conn.create_time_line_obj('레이디가가,', ([location3], [location2, location], []), '2023-08-10', '2023-08-13', '여행이름'))
+    # print(conn.get_recommended_attraction())
+    # print(len(conn.get_recommended_attraction()))
+    # print(conn.get_recommended_hotel())
+    # print(len(conn.get_recommended_hotel()))
+    # print(conn.find_all_location())
+    # print(conn.find_location_list_by_name_or_address('민수'))
+
+    # 이전 여행 불러오기 클릭시 최근 10개 반환
+    location_name_list =list()
+    for timeline_obj in conn.find_recent_timelines():
+        # print(timeline_obj)
+
+        # date_to_str = PlanDate.date_obj_to_str
+        # print(timeline_obj.trip_name, date_to_str(timeline_obj.plan_date.start_date), date_to_str(timeline_obj.plan_date.end_date))
+        for location_obj_list in timeline_obj.location_list:
+            tmp_list = list()
+            for location_obj in location_obj_list:
+                tmp_list.append(location_obj.name)
+            location_name_list.append(tmp_list)
+        print(location_name_list)
+    # print(conn.find_recent_timelines())
+
