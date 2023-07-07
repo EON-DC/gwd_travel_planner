@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem
 
 from ui.class_location_item import LocationItem
 # from class_location_item import LocationItem
-from ui_select_planner import Ui_select_planner
-# from ui.ui_select_planner import Ui_select_planner
+# from ui_select_planner import Ui_select_planner
+from ui.ui_select_planner import Ui_select_planner
 
 
 class SelectPlanner(QWidget, Ui_select_planner):
@@ -35,7 +35,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         self.btn_selection_4.clicked.connect(lambda x: self.save_schedule("save"))
 
-        self.test_init()
+        # self.test_init()
+        self.location_list = self.main_window.db_connector.get_recommended_attraction()
         self.set_location_item_list()
         self.set_schedule_item_list()
 
@@ -60,9 +61,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         for idx, list_item in enumerate(self.location_list):
             item = QListWidgetItem(rec_list_widget)
-            custom_widget = LocationItem(f"{list_item[0]}",
-                                         f"{list_item[1]}",
-                                         f"{list_item[2]}")
+            custom_widget = LocationItem(list_item)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
             rec_list_widget.setItemWidget(item, custom_widget)
             rec_list_widget.addItem(item)
@@ -75,9 +74,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         for idx, list_item in enumerate(self.schedule_list):
             item = QListWidgetItem(select_location_list_widget)
-            custom_widget = LocationItem(f"{list_item[0]}",
-                                         f"{list_item[1]}",
-                                         f"{list_item[2]}")
+            custom_widget = LocationItem(list_item)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
             select_location_list_widget.setItemWidget(item, custom_widget)
             select_location_list_widget.addItem(item)

@@ -427,12 +427,12 @@ class DBConnector:
         for location_ in all_locations:
             if location_.category == '명소':
                 result_list.append(location_)
-        recommended_attraction_list = list()
-        for obj in result_list:
-            obj: Location
-            name, address = obj.name, obj.address
-            recommended_attraction_list.append((name, address))
-        return recommended_attraction_list
+        # recommended_attraction_list = list()
+        # for obj in result_list:
+        #     obj: Location
+        #     name, address = obj.name, obj.address
+        #     recommended_attraction_list.append((name, address))
+        return result_list
 
     def get_recent_location_name_address(self):
         location_name_address_list = list()
@@ -452,9 +452,9 @@ class DBConnector:
         return trip_name_date_list
 
 if __name__ == '__main__':
-    conn = DBConnector(test_option=True)
-    # conn.create_tables()
-    # conn.make_fake_date_data()
+    conn = DBConnector(test_option=False)
+    conn.create_tables()
+    conn.make_fake_date_data()
     # plan_date = PlanDate(1, '2023-04-05', '2023-04-08')
     # # conn.insert_plan_date(plan_date)
     # # conn.insert_location(location)
