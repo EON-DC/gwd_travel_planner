@@ -7,7 +7,10 @@ from ui.class_location_item import LocationItem
 # from ui_select_planner import Ui_select_planner
 from ui.ui_select_planner import Ui_select_planner
 
+
 from class_plan_date import PlanDate
+
+import random
 
 
 class SelectPlanner(QWidget, Ui_select_planner):
@@ -17,7 +20,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.main_window = main_window
 
         self.schedule_list = list()
-        self.location_list = list()
+        self.rec_location_obj_list_from_db = list()
 
         self.rec_btn_list = [self.btn_rec_attraction, self.btn_rec_hotel]
 
@@ -46,9 +49,12 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.calendarWidget.clicked.connect(lambda qdate: self.set_plan_date(qdate))
 
         # self.test_init()
-        self.location_list = self.main_window.db_connector.get_recommended_attraction()
+        self.rec_location_obj_list_from_db = self.main_window.db_connector.get_recommended_attraction()
         self.set_location_item_list()
         self.set_schedule_item_list()
+    #
+    # def show_recommended_attraction(self):
+    #     random.sample(self.rec_location_obj_list_from_db, k=4)
 
     # 캘린더 값을 받는 함수
     def set_plan_date(self, qdate_obj, option=None):
@@ -132,7 +138,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         layout.addWidget(rec_list_widget)
         self.setLayout(layout)
 
-        for idx, list_item in enumerate(self.location_list):
+        for idx, list_item in enumerate(self.rec_location_obj_list_from_db):
             item = QListWidgetItem(rec_list_widget)
             custom_widget = LocationItem(list_item)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
@@ -155,7 +161,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
     def add_list_location_item(self, name, address, category):
         temp_list = [name, address, category]
-        self.location_list.append(temp_list)
+        self.rec_location_obj_list_from_db.append(temp_list)
 
     def add_list_schedule_item(self, name, address, category):
         temp_list = [name, address, category]
