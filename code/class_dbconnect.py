@@ -77,17 +77,17 @@ class DBConnector:
         self.end_conn()
 
     ## Timeline ======================================================================= ##
-    def insert_timeline(self, timeline_obj:TimeLine):
+    def insert_timeline(self, timeline_obj: TimeLine):
         c = self.start_conn()
         plan_date_object = timeline_obj.plan_date
-        plan_date_object:PlanDate
+        plan_date_object: PlanDate
         plan_date_id = plan_date_object.plan_date_id
 
         location_object_list = timeline_obj.location_list
         location_object_list: Location
-        location_id_list = []
+        location_id_list = list()
         for list_object in location_object_list:
-            tmp_list = []
+            tmp_list = list()
             for location_object in list_object:
                 tmp_list.append(location_object.location_id)
             location_id_list.append(tmp_list)
@@ -95,9 +95,8 @@ class DBConnector:
         username = timeline_obj.username
         trip_name = timeline_obj.trip_name
 
-        c.execute('insert into tb_timeline(plan_date_id, location_id_list, username, trip_name) values (?, ?, ?, ?)', \
-                             (plan_date_id, str(location_id_list), username, trip_name))
-
+        c.execute('insert into tb_timeline(plan_date_id, location_id_list, username, trip_name) values (?, ?, ?, ?)',
+                  (plan_date_id, str(location_id_list), username, trip_name))
         self.commit_db()
         self.end_conn()
 
@@ -123,7 +122,50 @@ class DBConnector:
         self.end_conn()
         return find_result_list
 
-    def find_timeline_by_id(self, user_id:int):
+    def find_recent_timelines(self):
+        all_timeline_list = conn.find_all_timeline()
+        all_timeline_list.sort()
+        recent_timeline_list = list()
+        for row in all_timeline_list[:10]:
+            recent_timeline_list.append(row)
+        return recent_timeline_list
+
+    def create_plan_date_obj(self, start_date_str, end_date_str) -> PlanDate:
+        """db에 등록하여 autoincrement된 id를 가진 개체가 반환됨"""
+        c = self.start_conn()
+        c.execute('insert into tb_plan_date(start, end) values (?, ?)', (start_date_str, end_date_str))
+        self.commit_db()
+        # id 최댓값으로 선택하게 쿼리변경, 객체가 넘어오게 인스턴스화-date클래스에서
+        created_date_row = c.execute('select * from tb_plan_date order by id desc limit 1').fetchone()
+        # date_id = created_date_row[0]
+        # start = created_date_row[1]
+        # end = created_date_row[2]
+        # created_date_obj = PlanDate(date_id, start, end)
+        # created_date_obj = PlanDate(created_date_row[0], created_date_row[1], created_date_row[2])
+        created_date_obj = PlanDate(*created_date_row)
+        self.end_conn()
+        return created_date_obj
+
+    def create_time_line_obj(self, username_str: str,
+                             location_list: list[Location],
+                             start_date_str: str,
+                             end_date_str: str,
+                             trip_name: str) -> TimeLine:
+        plan_date = self.create_plan_date_obj(start_date_str, end_date_str)
+        c = self.start_conn()
+        last_row = c.execute('select * from tb_timeline order by id desc limit 1').fetchone()
+        last_id = last_row[0] + 1
+        time_line = TimeLine(last_id, plan_date, location_list, username_str, trip_name)
+        self.insert_timeline(time_line)
+        """db에 등록하여 autoincrement된 id를 가진 timeline개체가 반환됨
+        위에서 만든 plan_date 함수와 기존 insert timeline 함수를 활용하여 str과 location 개체만으로도 time_line_obj를 database에 등록할 수 있음"""
+        created_timeline_row = c.execute('select * from tb_timeline order by id desc limit 1').fetchone()
+        # created_timeline_obj = PlanDate(created_timeline_row[0], created_timeline_row[1], created_timeline_row[2])
+        created_timeline_obj = TimeLine(*created_timeline_row)
+        self.end_conn()
+        return created_timeline_obj
+
+    def find_timeline_by_id(self, user_id: int):
         c = self.start_conn()
         row = c.execute('select * from tb_timeline where id = ?', (user_id,)).fetchone()
         time_line_id = row[0]
@@ -138,15 +180,15 @@ class DBConnector:
 
         self.end_conn()
         return time_line_obj
+
     def find_timeline_by_username(self, username: str):
         c = self.start_conn()
-        lines = c.execute('select * from tb_timeline where username = ?', (username, )).fetchall()
+        lines = c.execute('select * from tb_timeline where username = ?', (username,)).fetchall()
         line_obj_list = list()
         for row in lines:
             line_obj_list.append(self.find_timeline_by_id(row[0]))
         self.end_conn()
         return line_obj_list
-
 
     def convert_location_id_list_to_location_list(self, location_id_list: list):
         result_list = list()
@@ -189,6 +231,7 @@ class DBConnector:
         self.end_conn()
         line_obj = self.find_timeline_by_id(timeline_id)
         return line_obj
+
     def delete_timeline_by_id(self, timeline_id: int):
         c = self.start_conn()
         cur = c.execute("delete from tb_timeline where id = ?", (timeline_id,))
@@ -204,7 +247,7 @@ class DBConnector:
         w_do = location_obj.w_do
         g_do = location_obj.g_do
         description = location_obj.description
-        c.execute('insert into tb_location(name, category, w_do, g_do, address, description) values (?, ?, ?, ?, ?, ?)',\
+        c.execute('insert into tb_location(name, category, w_do, g_do, address, description) values (?, ?, ?, ?, ?, ?)', \
                   (name, category, address, w_do, g_do, description))
         self.commit_db()
         self.end_conn()
@@ -241,12 +284,12 @@ class DBConnector:
         return rows_data
 
     def find_location_list_by_name(self, location_name_str: str) -> list:
-        location_list = []
+        location_list = list()
         c = self.start_conn()
         # print(c.execute("select * from tb_location where name like ?", ("%수민%", )).fetchall())
-        locations = c.execute("select * from tb_location where name like ?", (f"%{location_name_str}%", )).fetchall()
+        locations = c.execute("select * from tb_location where name like ?", (f"%{location_name_str}%",)).fetchall()
         if len(locations) == 0:
-            return []
+            return None
 
         for i in locations:
             location_list.append(i[1])
@@ -260,7 +303,7 @@ class DBConnector:
         self.end_conn()
 
     ## PlanDate ======================================================================= ##
-    def insert_plan_date(self, plan_date_obj:PlanDate):
+    def insert_plan_date(self, plan_date_obj: PlanDate):
         c = self.start_conn()
         start = plan_date_obj.date_obj_to_str(plan_date_obj.start_date)
         end = plan_date_obj.date_obj_to_str(plan_date_obj.end_date)
@@ -326,7 +369,7 @@ class DBConnector:
                 random_location_id_list.append(list())
             temp_list = random.sample(range(1, 1001), random.randint(2, 10))
             for l_id in temp_list:
-                random_location_id_list[random.randint(0, random_day_count-1)].append(l_id)
+                random_location_id_list[random.randint(0, random_day_count - 1)].append(l_id)
 
             fake_username = self.faker.name()
             fake_trip_name = self.faker.town()
@@ -340,19 +383,16 @@ class DBConnector:
 
     def delete_plan_date_by_id(self, plan_date_id: int):
         c = self.start_conn()
-        cur = c.execute("delete from tb_plan_date where id = ?", (plan_date_id,))
+        c.execute("delete from tb_plan_date where id = ?", (plan_date_id,))
         self.commit_db()
         self.end_conn()
 
 
 if __name__ == '__main__':
-    conn = DBConnector(test_option=False)
-    conn.create_tables()
-    conn.make_fake_date_data()
+    conn = DBConnector(test_option=True)
+    # conn.create_tables()
+    # conn.make_fake_date_data()
     # plan_date = PlanDate(1, '2023-04-05', '2023-04-08')
-    # location = Location(7, '망상해수욕장', '1', '1.11111', '2.22222', '강원도어쩌구', '망상하는해수욕장')
-    # location2 = Location(3, '해수욕장', '1', '1.41111', '2.62222', '강원도저쩌구', '그냥해수욕장')
-    # location3 = Location(85, '오죽헌', '1', '1.41111', '2.62222', '강원도머시기', '오죽헌이올시다')
     # # conn.insert_plan_date(plan_date)
     # # conn.insert_location(location)
     # # print(a)
@@ -364,8 +404,19 @@ if __name__ == '__main__':
     #     print(plan_date)
     # for location in conn.find_all_location():
     #     print(location)
-    for timeline in conn.find_all_timeline():
-        print(timeline)
+    # for timeline in conn.find_all_timeline():
+    #     print(timeline)
+    # l = conn.find_all_timeline()
+    # l.sort()
+    # # print(l)
+    # for row in l[:10]:
+    #     print(row)
+    location = Location(90, '망상해수욕장', '1', '1.11111', '2.22222', '강원도어쩌구', '망상하는해수욕장')
+    location2 = Location(55, '해수욕장', '1', '1.41111', '2.62222', '강원도저쩌구', '그냥해수욕장')
+    location3 = Location(23, '오죽헌', '1', '1.41111', '2.62222', '강원도머시기', '오죽헌이올시다')
+
+    # print(conn.find_recent_timelines())
+
     # print(conn.delete_location_by_id(998))
     # print(conn.delete_timeline_by_id(1001))
     # print(conn.delete_plan_date_by_id(1001))
@@ -374,3 +425,6 @@ if __name__ == '__main__':
     # print(conn.update_timeline_by_id_username(999, '사무엘잭슨'))
     # print(conn.update_timeline_by_id_username(999, '사무엘잭슨').username)
     # print(conn.find_timeline_by_id(999).username)
+
+    # print(conn.create_plan_date_obj('2023-07-06', '2023-07-09'))
+    print(conn.create_time_line_obj('레이디가가,', ([location3], [location2, location], []), '2023-08-10', '2023-08-13', '여행이름'))
