@@ -14,6 +14,9 @@ class WindowController(QWidget):
         super().__init__()
         self.trip_name = None  # 여행 이름
         self.db_connector = db_connector    #db연결 인스턴스
+        self.plan_date = None
+        self.start_date_str = None
+        self.end_date_str = None
         self.start_page = StartPage(self)  # 시작페이지 페이지
         self.first_trip = FirstTrip(self)  # 처음 여행 페이지
         self.prev_trip = RecallPreviousTrip(self)  # 이전 여행 페이지

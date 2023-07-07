@@ -1022,26 +1022,29 @@
                        <widget class="QLabel" name="label_few_date">
                         <property name="minimumSize">
                          <size>
-                          <width>200</width>
+                          <width>300</width>
                           <height>40</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>200</width>
+                          <width>300</width>
                           <height>40</height>
                          </size>
                         </property>
                         <property name="font">
                          <font>
-                          <family>G마켓 산스 TTF Bold</family>
-                          <pointsize>20</pointsize>
-                          <weight>75</weight>
-                          <bold>true</bold>
+                          <family>G마켓 산스 TTF Medium</family>
+                          <pointsize>16</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="text">
-                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;??? DAY&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;시작일을 선택해주세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        </property>
+                        <property name="wordWrap">
+                         <bool>false</bool>
                         </property>
                        </widget>
                       </item>
@@ -1093,7 +1096,7 @@
                          </font>
                         </property>
                         <property name="text">
-                         <string>선택완료</string>
+                         <string>선택 완료</string>
                         </property>
                        </widget>
                       </item>
@@ -2678,7 +2681,7 @@
                          </font>
                         </property>
                         <property name="text">
-                         <string>선택완료</string>
+                         <string>담긴 목록 확인</string>
                         </property>
                        </widget>
                       </item>
@@ -2735,7 +2738,7 @@
                        <number>20</number>
                       </property>
                       <item>
-                       <widget class="QLabel" name="label_15">
+                       <widget class="QLabel" name="label_gwd">
                         <property name="minimumSize">
                          <size>
                           <width>180</width>
@@ -2990,7 +2993,7 @@
                          </font>
                         </property>
                         <property name="text">
-                         <string>선택완료</string>
+                         <string>담긴 목록 확인</string>
                         </property>
                        </widget>
                       </item>
