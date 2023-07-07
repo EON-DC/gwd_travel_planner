@@ -5,6 +5,8 @@ from ui.class_location_item import LocationItem
 # from ui_select_planner import Ui_select_planner
 from ui.ui_select_planner import Ui_select_planner
 
+import random
+
 
 class SelectPlanner(QWidget, Ui_select_planner):
     def __init__(self, main_window):
@@ -13,7 +15,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.main_window = main_window
 
         self.schedule_list = list()
-        self.location_list = list()
+        self.rec_location_obj_list_from_db = list()
 
         self.rec_btn_list = [self.btn_rec_attraction, self.btn_rec_hotel]
 
@@ -36,9 +38,12 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.btn_selection_4.clicked.connect(lambda x: self.save_schedule("save"))
 
         # self.test_init()
-        self.location_list = self.main_window.db_connector.get_recommended_attraction()
+        self.rec_location_obj_list_from_db = self.main_window.db_connector.get_recommended_attraction()
         self.set_location_item_list()
         self.set_schedule_item_list()
+    #
+    # def show_recommended_attraction(self):
+    #     random.sample(self.rec_location_obj_list_from_db, k=4)
 
 
     def show(self):
@@ -59,7 +64,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         layout.addWidget(rec_list_widget)
         self.setLayout(layout)
 
-        for idx, list_item in enumerate(self.location_list):
+        for idx, list_item in enumerate(self.rec_location_obj_list_from_db):
             item = QListWidgetItem(rec_list_widget)
             custom_widget = LocationItem(list_item)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
@@ -81,20 +86,20 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
     def add_list_location_item(self, name, address, category):
         temp_list = [name, address, category]
-        self.location_list.append(temp_list)
+        self.rec_location_obj_list_from_db.append(temp_list)
 
     def add_list_schedule_item(self, name, address, category):
         temp_list = [name, address, category]
         self.schedule_list.append(temp_list)
 
-    def test_init(self):
-        self.add_list_location_item("광주인력개발원", "광주광역시 광산구 소촌로 152번길 37", "기술학원")
-        self.add_list_location_item("광주패밀리랜드", "광주광역시 북구 우치로 677 광주패밀리랜드", "테마공원")
-        self.add_list_location_item("전남대학교", "광주광역시 북구 용봉로 77", "국립대학교")
-        self.add_list_location_item("광주충장로우체국", "광주광역시 동구 충장로 94", "우체국")
-
-        self.add_list_schedule_item("광주패밀리랜드", "광주광역시 북구 우치로 677 광주패밀리랜드", "테마공원")
-        self.add_list_schedule_item("전남대학교", "광주광역시 북구 용봉로 77", "국립대학교")
+    # def test_init(self):
+    #     self.add_list_location_item("광주인력개발원", "광주광역시 광산구 소촌로 152번길 37", "기술학원")
+    #     self.add_list_location_item("광주패밀리랜드", "광주광역시 북구 우치로 677 광주패밀리랜드", "테마공원")
+    #     self.add_list_location_item("전남대학교", "광주광역시 북구 용봉로 77", "국립대학교")
+    #     self.add_list_location_item("광주충장로우체국", "광주광역시 동구 충장로 94", "우체국")
+    #
+    #     self.add_list_schedule_item("광주패밀리랜드", "광주광역시 북구 우치로 677 광주패밀리랜드", "테마공원")
+    #     self.add_list_schedule_item("전남대학교", "광주광역시 북구 용봉로 77", "국립대학교")
 
     def page_move(self, btn):
         if btn == "back":

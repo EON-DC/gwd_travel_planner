@@ -453,8 +453,8 @@ class DBConnector:
 
 if __name__ == '__main__':
     conn = DBConnector(test_option=False)
-    conn.create_tables()
-    conn.make_fake_date_data()
+    # conn.create_tables()
+    # conn.make_fake_date_data()
     # plan_date = PlanDate(1, '2023-04-05', '2023-04-08')
     # # conn.insert_plan_date(plan_date)
     # # conn.insert_location(location)
@@ -490,13 +490,13 @@ if __name__ == '__main__':
 
     # print(conn.create_plan_date_obj('2023-07-06', '2023-07-09'))
     # print(conn.create_time_line_obj('레이디가가,', ([location3], [location2, location], []), '2023-08-10', '2023-08-13', '여행이름'))
-    # print(conn.get_recommended_attraction())
+    print(conn.get_recommended_attraction())
     # print(len(conn.get_recommended_attraction()))
     # print(conn.get_recommended_hotel())
     # print(len(conn.get_recommended_hotel()))
     # print(conn.find_all_location())
     # print(conn.find_location_list_by_name_or_address('민수'))
-
+    #
     # 이전 여행 불러오기 클릭시 최근 10개 반환
     # location_name_list =list()
     # for timeline_obj in conn.find_recent_timelines():
