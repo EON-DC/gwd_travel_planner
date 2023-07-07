@@ -1,11 +1,14 @@
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem
 
 from ui.class_location_item import LocationItem
 # from class_location_item import LocationItem
 # from ui_select_planner import Ui_select_planner
 from ui.ui_select_planner import Ui_select_planner
-
 import random
+
+from class_folium_factory import FoliumMapFactory
+from class_excel_converter import ExcelConverter
 
 
 class SelectPlanner(QWidget, Ui_select_planner):
@@ -41,16 +44,36 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.rec_location_obj_list_from_db = self.main_window.db_connector.get_recommended_attraction()
         self.set_location_item_list()
         self.set_schedule_item_list()
-    #
-    # def show_recommended_attraction(self):
-    #     random.sample(self.rec_location_obj_list_from_db, k=4)
+        #
+        # def show_recommended_attraction(self):
+        #     random.sample(self.rec_location_obj_list_from_db, k=4)
 
+        self.folium_factory = FoliumMapFactory()  # Folium 팩토리
+        self.web_view = QWebEngineView(self)
+        self.excel_converter = ExcelConverter()  # 엑셀 저장 기능 인스턴스
 
     def show(self):
         self.stackedWidget.setCurrentIndex(0)
         self.label_select_date.hide()
+        self.folium_factory.clear()
+        self.init_web_engine_layout()
         self.init_title_label()
         super().show()
+
+    def init_web_engine_layout(self):
+        if self.widget_folium.layout() is None:
+            v_layout = QBoxLayout(QBoxLayout.TopToBottom)
+            v_layout.setParent(self.widget_folium)
+            v_layout.addWidget(self.web_view)
+            self.widget_folium.setLayout(v_layout)
+        self.label.deleteLater()
+        self.set_location_web_view()
+
+    def set_location_web_view(self, location_obj=None):
+        if location_obj is not None:
+            self.folium_factory.set_location(location_obj)
+        self.folium_factory.set_folium_map()
+        self.web_view.setHtml(self.folium_factory.make_html())
 
     def init_title_label(self):
         if self.main_window.trip_name is not None:
@@ -58,7 +81,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         else:
             self.label_schedule_name.setText("스케줄명")
 
-    def set_location_item_list(self):       # 주소 리스트위젯화
+    def set_location_item_list(self):  # 주소 리스트위젯화
         layout = QBoxLayout(QBoxLayout.TopToBottom)
         rec_list_widget = self.listWidget_rec_location  # 선택 목록 리스트위젯 인스턴스화
         layout.addWidget(rec_list_widget)
@@ -66,12 +89,12 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         for idx, list_item in enumerate(self.rec_location_obj_list_from_db):
             item = QListWidgetItem(rec_list_widget)
-            custom_widget = LocationItem(list_item)
+            custom_widget = LocationItem(list_item, self)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
             rec_list_widget.setItemWidget(item, custom_widget)
             rec_list_widget.addItem(item)
 
-    def set_schedule_item_list(self):        # 선택 일에 맞춰 변경되도록 설정하기(아직 대기)
+    def set_schedule_item_list(self):  # 선택 일에 맞춰 변경되도록 설정하기(아직 대기)
         layout = QBoxLayout(QBoxLayout.TopToBottom)
         select_location_list_widget = self.listWidget_select_list  # 선택 목록 리스트위젯 인스턴스화
         layout.addWidget(select_location_list_widget)
@@ -79,7 +102,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         for idx, list_item in enumerate(self.schedule_list):
             item = QListWidgetItem(select_location_list_widget)
-            custom_widget = LocationItem(list_item)
+            custom_widget = LocationItem(list_item, self)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
             select_location_list_widget.setItemWidget(item, custom_widget)
             select_location_list_widget.addItem(item)
@@ -119,7 +142,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         elif btn == "select_1":
             print("코스 추천")
             self.stackedWidget.setCurrentIndex(1)
-            #todo : label_select_date 숨겨놓은 상태임, 보이게 하는 로직 필요
+            # todo : label_select_date 숨겨놓은 상태임, 보이게 하는 로직 필요
 
         elif btn == "select_2_3":
             check = QMessageBox.question(self, "확인", "일정에 담겼습니다.\n확인해보시겠습니까?",

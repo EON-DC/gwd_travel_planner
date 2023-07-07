@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 
-from class_csv_reader import CSVReader
-from class_folium_factory import FoliumMapFactory
+
+
 from class_excel_converter import ExcelConverter
 from ui.class_first_trip import FirstTrip
 from ui.class_recall_previous_trip import RecallPreviousTrip
@@ -22,8 +22,8 @@ class WindowController(QWidget):
         self.first_trip = FirstTrip(self)  # 처음 여행 페이지
         self.prev_trip = RecallPreviousTrip(self)  # 이전 여행 페이지
         self.select_planner = SelectPlanner(self)  # 스케줄러 페이지
-        self.folium_factory = FoliumMapFactory()  # Folium 팩토리
-        self.excel_converter = ExcelConverter()  # 엑셀 저장 기능 인스턴스
+
+
 
 
 
