@@ -13,6 +13,7 @@ def main():
     main_window = class_main_window_controller.WindowController()
     print('hello')
     main_window.start_page.show()
+    main_window.start_page.show()
     # main_window.first_trip.show()
     # main_window.prev_trip.show()
     # main_window.select_planner.show()
