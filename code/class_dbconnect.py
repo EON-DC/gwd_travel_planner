@@ -434,6 +434,23 @@ class DBConnector:
             recommended_attraction_list.append((name, address))
         return recommended_attraction_list
 
+    def get_recent_location_name_address(self):
+        location_name_address_list = list()
+        for timeline_obj in self.find_recent_timelines():
+            for location_obj_list in timeline_obj.location_list:
+                tmp_list = list()
+                for location_obj in location_obj_list:
+                    tmp_list.append((location_obj.name, location_obj.address))
+                location_name_address_list.append(tmp_list)
+        return location_name_address_list
+
+    def get_recent_trip_name_date(self):
+        trip_name_date_list = list()
+        for timeline_obj in self.find_recent_timelines():
+            date_to_str = PlanDate.date_obj_to_str
+            trip_name_date_list.append((timeline_obj.trip_name, date_to_str(timeline_obj.plan_date.start_date), date_to_str(timeline_obj.plan_date.end_date)))
+        return trip_name_date_list
+
 if __name__ == '__main__':
     conn = DBConnector(test_option=True)
     # conn.create_tables()
@@ -481,17 +498,20 @@ if __name__ == '__main__':
     # print(conn.find_location_list_by_name_or_address('민수'))
 
     # 이전 여행 불러오기 클릭시 최근 10개 반환
-    location_name_list =list()
-    for timeline_obj in conn.find_recent_timelines():
-        # print(timeline_obj)
+    # location_name_list =list()
+    # for timeline_obj in conn.find_recent_timelines():
+    #     # print(timeline_obj)
+    #
+    #     # date_to_str = PlanDate.date_obj_to_str
+    #     # print(timeline_obj.trip_name, date_to_str(timeline_obj.plan_date.start_date), date_to_str(timeline_obj.plan_date.end_date))
+    #     for location_obj_list in timeline_obj.location_list:
+    #         tmp_list = list()
+    #         for location_obj in location_obj_list:
+    #             tmp_list.append((location_obj.name, location_obj.address))
+    #         location_name_list.append(tmp_list)
+    #     print(location_name_list)
 
-        # date_to_str = PlanDate.date_obj_to_str
-        # print(timeline_obj.trip_name, date_to_str(timeline_obj.plan_date.start_date), date_to_str(timeline_obj.plan_date.end_date))
-        for location_obj_list in timeline_obj.location_list:
-            tmp_list = list()
-            for location_obj in location_obj_list:
-                tmp_list.append(location_obj.name)
-            location_name_list.append(tmp_list)
-        print(location_name_list)
+    # print(conn.get_recent_location_name_address())
+    # print(conn.get_recent_trip_name_date())
     # print(conn.find_recent_timelines())
 
