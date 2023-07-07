@@ -13,8 +13,9 @@ class CSVReader:
         self.data = None
         self.db_connector = db_connector
 
-    def get_data_from_xlxs(self):
+    def set_location_data_from_xlxs(self):
         df = pd.read_excel(self.PATH, engine="openpyxl")
+        conn = self.db_connector
         c = conn.start_conn()
 
         for idx in df.index:
@@ -31,10 +32,20 @@ class CSVReader:
         conn.commit_db()
         conn.end_conn()
 
+    def set_location_data_from_xlxs(self):
+        conn = self.db_connector
+        c = conn.start_conn()
+
+        c.execute("""insert into tb_location(ID, CATEGORY, ADDRESS, NAME, W_DO, g_do, DESCRIPTION)
+                     values (?, ?, ?, ?, ?, ?, ?)""",)
+        # todo : add real dummy data
+        conn.commit_db()
+        conn.end_conn()
+
 
 if __name__ == '__main__':
     conn = DBConnector(test_option=True)
     conn.create_tables()
 
     reader = CSVReader(conn)
-    reader.get_data_from_xlxs()
+    reader.set_location_data_from_xlxs()

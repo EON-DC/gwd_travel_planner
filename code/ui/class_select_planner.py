@@ -1,12 +1,12 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate, Qt
-from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem, QVBoxLayout
 
 from ui.class_location_item import LocationItem
 # from class_location_item import LocationItem
 # from ui_select_planner import Ui_select_planner
 from ui.ui_select_planner import Ui_select_planner
-
 
 from class_plan_date import PlanDate
 
@@ -134,11 +134,12 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
     def init_web_engine_layout(self):
         if self.widget_folium.layout() is None:
-            v_layout = QBoxLayout(QBoxLayout.TopToBottom)
-            v_layout.setParent(self.widget_folium)
+            v_layout = QVBoxLayout(self.widget_folium)
             v_layout.addWidget(self.web_view)
             self.widget_folium.setLayout(v_layout)
-        self.label.deleteLater()
+        if self.label is not None:
+            self.label.deleteLater()
+            self.label = None
         self.set_location_web_view()
 
     # first_trip에서 받은 스케줄명을 상단 스케즐명에 출력 시키기

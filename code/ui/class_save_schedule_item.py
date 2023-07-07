@@ -4,12 +4,13 @@ from ui.ui_save_schedule_item import Ui_save_schedule_item
 # from ui_save_schedule_item import Ui_save_schedule_item
 
 class SaveScheduleItem(QWidget, Ui_save_schedule_item):
-    def __init__(self, name, start_date, end_date, main_window):
+    def __init__(self, time_line_obj, main_window):
         super().__init__()
         self.setupUi(self)
-        self.name = name
-        self.start_date = start_date
-        self.end_date = end_date
+        self.time_line = time_line_obj
+        self.name = self.time_line.name
+        self.start_date = self.time_line.plan_date.start_date
+        self.end_date = self.time_line.plan_date.end_date
         self.main_window = main_window
 
         self.mouseDoubleClickEvent = lambda x: self.double_click_widget()

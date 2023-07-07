@@ -6,17 +6,18 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 import class_main_window_controller
 from class_dbconnect import DBConnector
+from class_csv_reader import CSVReader
 
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
     dbconn = DBConnector()
+    dbconn.create_tables()  # 배포전 확인! 이 라인 삭제해야함
+    c_reader = CSVReader(dbconn)
+    c_reader.set_location_data_from_xlxs() ## INSERT REAL DATA
+
     main_window = class_main_window_controller.WindowController(dbconn)
     main_window.start_page.show()
-    main_window.start_page.show()
-    # main_window.first_trip.show()
-    # main_window.prev_trip.show()
-    # main_window.select_planner.show()
 
     sys.excepthook = lambda exctype, value, traceback: show_error_message(str(value), traceback)
 
