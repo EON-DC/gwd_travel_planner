@@ -1,7 +1,6 @@
 import datetime
 
 from class_time_line import TimeLine
-from class_plan_date import PlanDate
 from openpyxl.styles import Alignment, Font, Border, Side, PatternFill
 
 from class_location import Location
@@ -147,7 +146,7 @@ class ExcelConverter:
 
         self.set_timeline_duration_str()
 
-        for offset, daily_location_list in enumerate(timeline.location_list):
+        for offset, daily_location_list in enumerate(time_line.location_list):
             self.add_row_day_and_category_title(current_row_idx, offset, time_line_obj)
             current_row_idx += 2
             if len(daily_location_list) == 0:
@@ -173,12 +172,12 @@ class ExcelConverter:
             name = ''
             address = ''
 
-        if category == '1':
+        if category == '명소':
             ws[f'A{row_idx}'].value = inner_idx
             ws[f'A{row_idx}'].fill = self.FILL_IVORY
             ws[f'B{row_idx}'].value = '명소'
 
-        elif category == '0':
+        elif category == '숙소':
             ws[f'A{row_idx}'].value = '*'
             ws[f'A{row_idx}'].fill = self.FILL_GREEN
             ws[f'B{row_idx}'].value = '숙박'
@@ -195,17 +194,3 @@ class ExcelConverter:
         self.set_fill_plain(ws[f'E{row_idx}'])
 
 
-if __name__ == '__main__':
-    plan_date = PlanDate(1, '2023-04-05', '2023-04-08')
-    location = Location(7, '망상해수욕장', '1', '1.11111', '2.22222', '강원도어쩌구', '망상하는해수욕장')
-    location2 = Location(3, '해수욕장', '1', '1.41111', '2.62222', '강원도저쩌구', '그냥해수욕장')
-    location3 = Location(85, '오죽헌', '0', '1.41111', '2.62222', '강원도머시기', '오죽헌이올시다')
-    location4 = Location(99, '경로당', '1', '1.41111', '2.62222', '강원도머시기', '오죽헌이올시다')
-    # conn.insert_plan_date(plan_date)
-    # conn.insert_location(location)
-    # print(a)
-    timeline = TimeLine(1, plan_date, [[location], [location2, location3], [], [location4]], '사용자', '사용자여행')
-    ec = ExcelConverter(timeline)
-    ec.create_workbook()
-    ec.set_timeline(timeline)
-    ec.save_excel_file()
