@@ -9,24 +9,37 @@ class FirstTrip(QWidget, Ui_first_trip):
         self.setupUi(self)
         self.main_window = main_window
 
+        self.btn_next.hide()
+
+        self.lineedit_schedule_name.textChanged.connect(self.text_changed)
+        self.lineedit_schedule_name.returnPressed.connect(self.get_schedule_name)
+
         self.btn_back.mousePressEvent = lambda x: self.page_move("back")
         self.btn_next.mousePressEvent = lambda x: self.page_move("next")
 
-        self.lineedit_schedule_name.returnPressed.connect(self.get_schedule_name)
+    def text_changed(self, text):
+        if text:
+            # print("텍스트 값이 있습니다.")
+            self.btn_next.show()
+
+        else:
+            # print("텍스트 값이 없습니다.")
+            self.btn_next.hide()
 
     def page_move(self, btn):
         if btn == "back":
-            print("이전")
             self.close()
 
         elif btn == "next":
-            print("다음")
-            self.main_window.select_planner.show()
+            self.get_schedule_name()
+
+            # self.main_window.select_planner.show()
 
     def get_schedule_name(self):
         self.schedule_name = self.lineedit_schedule_name.text()
         self.lineedit_schedule_name.setText("")
         print("스케줄명:", self.schedule_name)
+
         self.check_mesagge()
 
     def check_mesagge(self):
@@ -35,6 +48,7 @@ class FirstTrip(QWidget, Ui_first_trip):
 
         if check == QMessageBox.Yes:
             QMessageBox.about(self, "알림", "저장이 완료되었습니다.")
+            self.main_window.select_planner.show()
 
         elif check == QMessageBox.No:
             QMessageBox.about(self, "알림", "다시 입력해주세요.")

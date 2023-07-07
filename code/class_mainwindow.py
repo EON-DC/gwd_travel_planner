@@ -14,6 +14,11 @@ class MainWindow(QWidget):
         self.prev_trip = RecallPreviousTrip(self)   # 이전 여행 페이지
         self.select_planner = SelectPlanner(self)   # 스케줄러 페이지
 
+    def move_to_edit_timeline(self):
+        print("수정화면으로 이동하였습니다.")
+        self.select_planner.show()
+        self.select_planner.move_to_edit_timeline()
+
 
 
 
