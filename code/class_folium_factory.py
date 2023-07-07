@@ -48,18 +48,13 @@ class FoliumMapFactory:
             att_marker_group = folium.FeatureGroup(name="attraction").add_to(self.folium_map)
             hotel_marker_group = folium.FeatureGroup(name="hotel").add_to(self.folium_map)
             for location_ in self.location_list:
-                category = 0
-                w_do = 0
-                g_do = 0
-                if location_.category.isdigit():
-                    category = int(location_.category)
-                    w_do = location_.w_do
-                    g_do = location_.g_do
-
-                if category == 0:
+                category = location_.category
+                w_do = location_.w_do
+                g_do = location_.g_do
+                if category == "숙소":
                     icon = folium.Icon(color='blue', icon='star', prefix='fa')
                     att_marker_group.add_child(folium.Marker((w_do, g_do), icon=icon).add_to(self.folium_map))
-                elif category == 1:
+                elif category == "명소":
                     icon = folium.Icon(color='red', icon='house', prefix='fa')
                     hotel_marker_group.add_child(folium.Marker((w_do, g_do), icon=icon).add_to(self.folium_map))
 
@@ -67,14 +62,3 @@ class FoliumMapFactory:
         self.folium_map.save(data, close_file=False)
         return data.getvalue().decode()
 
-
-if __name__ == '__main__':
-    location = Location(7, '망상해수욕장', '1', '1.11111', '44.22222', '강원도어쩌구', '망상하는해수욕장')
-    location2 = Location(3, '해수욕장', '1', '5.41111', '12.62222', '강원도저쩌구', '그냥해수욕장')
-    location3 = Location(85, '오죽헌', '1', '11.41111', '3.62222', '강원도머시기', '오죽헌이올시다')
-    location4 = Location(33, '오죽헌', '1', '21.41111', '32.62222', '강원도머시기2', '오죽헌이올시다')
-
-    # factory = FoliumMapFactory(location, [location2, location3, location4])
-    factory = FoliumMapFactory()
-    # with open('test.html', 'w') as file:
-    #     file.write(factory.make_html())
