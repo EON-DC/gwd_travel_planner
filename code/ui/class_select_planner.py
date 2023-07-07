@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem
 
 from ui.class_location_item import LocationItem
 # from class_location_item import LocationItem
-# from ui_select_planner import Ui_select_planner
-from ui.ui_select_planner import Ui_select_planner
+from ui_select_planner import Ui_select_planner
+# from ui.ui_select_planner import Ui_select_planner
 
 
 class SelectPlanner(QWidget, Ui_select_planner):
@@ -36,12 +36,13 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.btn_selection_4.clicked.connect(lambda x: self.save_schedule("save"))
 
         self.test_init()
-        self.set_location_item_lsit()
+        self.set_location_item_list()
         self.set_schedule_item_list()
 
 
     def show(self):
         self.stackedWidget.setCurrentIndex(0)
+        self.label_select_date.hide()
         self.init_title_label()
         super().show()
 
@@ -51,42 +52,42 @@ class SelectPlanner(QWidget, Ui_select_planner):
         else:
             self.label_schedule_name.setText("스케줄명")
 
-    def set_location_item_lsit(self):       # 주소 리스트위젯화
+    def set_location_item_list(self):       # 주소 리스트위젯화
         layout = QBoxLayout(QBoxLayout.TopToBottom)
-        self.viewer_1 = self.listWidget_rec_location  # 선택 목록 리스트위젯 인스턴스화
-        layout.addWidget(self.viewer_1)
+        rec_list_widget = self.listWidget_rec_location  # 선택 목록 리스트위젯 인스턴스화
+        layout.addWidget(rec_list_widget)
         self.setLayout(layout)
 
         for idx, list_item in enumerate(self.location_list):
-            item = QListWidgetItem(self.viewer_1)
+            item = QListWidgetItem(rec_list_widget)
             custom_widget = LocationItem(f"{list_item[0]}",
                                          f"{list_item[1]}",
                                          f"{list_item[2]}")
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
-            self.viewer_1.setItemWidget(item, custom_widget)
-            self.viewer_1.addItem(item)
+            rec_list_widget.setItemWidget(item, custom_widget)
+            rec_list_widget.addItem(item)
 
     def set_schedule_item_list(self):        # 선택 일에 맞춰 변경되도록 설정하기(아직 대기)
         layout = QBoxLayout(QBoxLayout.TopToBottom)
-        self.viewer_2 = self.listWidget_select_list  # 선택 목록 리스트위젯 인스턴스화
-        layout.addWidget(self.viewer_2)
+        select_location_list_widget = self.listWidget_select_list  # 선택 목록 리스트위젯 인스턴스화
+        layout.addWidget(select_location_list_widget)
         self.setLayout(layout)
 
         for idx, list_item in enumerate(self.schedule_list):
-            item = QListWidgetItem(self.viewer_2)
+            item = QListWidgetItem(select_location_list_widget)
             custom_widget = LocationItem(f"{list_item[0]}",
                                          f"{list_item[1]}",
                                          f"{list_item[2]}")
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
-            self.viewer_2.setItemWidget(item, custom_widget)
-            self.viewer_2.addItem(item)
+            select_location_list_widget.setItemWidget(item, custom_widget)
+            select_location_list_widget.addItem(item)
 
-    def add_list_location_item(self, name, adress, category):
-        temp_list = [name, adress, category]
+    def add_list_location_item(self, name, address, category):
+        temp_list = [name, address, category]
         self.location_list.append(temp_list)
 
-    def add_list_schedule_item(self, name, adress, category):
-        temp_list = [name, adress, category]
+    def add_list_schedule_item(self, name, address, category):
+        temp_list = [name, address, category]
         self.schedule_list.append(temp_list)
 
     def test_init(self):
@@ -116,6 +117,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         elif btn == "select_1":
             print("코스 추천")
             self.stackedWidget.setCurrentIndex(1)
+            #todo : label_select_date 숨겨놓은 상태임, 보이게 하는 로직 필요
 
         elif btn == "select_2_3":
             check = QMessageBox.question(self, "확인", "일정에 담겼습니다.\n확인해보시겠습니까?",

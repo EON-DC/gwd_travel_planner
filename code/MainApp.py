@@ -4,12 +4,14 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import class_mainwindow
+import class_main_window_controller
+from class_dbconnect import DBConnector
 
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    main_window = class_mainwindow.MainWindow()
+    main_window = class_main_window_controller.WindowController()
+    print('hello')
     main_window.start_page.show()
     # main_window.first_trip.show()
     # main_window.prev_trip.show()

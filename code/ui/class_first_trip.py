@@ -13,9 +13,16 @@ class FirstTrip(QWidget, Ui_first_trip):
 
         self.lineedit_schedule_name.textChanged.connect(self.text_changed)
         # self.lineedit_schedule_name.returnPressed.connect(self.get_schedule_name)
-
+        self.lineedit_schedule_name.returnPressed.connect(lambda : self.assert_trip_name())
         self.btn_back.mousePressEvent = lambda x: self.page_move("back")
         self.btn_next.mousePressEvent = lambda x: self.page_move("next")
+
+    def assert_trip_name(self):
+        trip_name = self.lineedit_schedule_name.text()
+        if 0 < len(trip_name) <= 10:
+            self.page_move('next')
+        else:
+            return
 
     def text_changed(self, text):
         if text:

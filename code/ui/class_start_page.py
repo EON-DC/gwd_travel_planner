@@ -9,7 +9,6 @@ class StartPage(QWidget, Ui_start_page):
         self.setupUi(self)
         self.main_window = main_window
 
-
         self.btn_new_trip.clicked.connect(lambda x: self.page_move("new_trip"))
         self.btn_prev_trip.clicked.connect(lambda x: self.page_move("prev_trip"))
 

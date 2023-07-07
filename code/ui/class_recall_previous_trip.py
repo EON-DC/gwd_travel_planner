@@ -25,19 +25,19 @@ class RecallPreviousTrip(QWidget, Ui_recall_proevious_trip):
 
     def import_save_trip(self):
         layout = QBoxLayout(QBoxLayout.TopToBottom)
-        self.viewer = self.listwidget_save_trip
-        layout.addWidget(self.viewer)
+        viewer = self.listwidget_save_trip
+        layout.addWidget(viewer)
         self.setLayout(layout)
 
         for idx, item_list in enumerate(self.schedule_list):
-            item = QListWidgetItem(self.viewer)
+            item = QListWidgetItem(viewer)
             custom_widget = SaveScheduleItem(f"{item_list[0]}",
                                              f"{item_list[1]}",
                                              f"{item_list[2]}",
                                              self.main_window)
             item.setSizeHint(custom_widget.sizeHint())
-            self.viewer.setItemWidget(item, custom_widget)
-            self.viewer.addItem(item)
+            viewer.setItemWidget(item, custom_widget)
+            viewer.addItem(item)
 
     def add_list_saved_item(self, name, start_str, end_str):
         temp_list = [name, start_str, end_str]
