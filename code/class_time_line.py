@@ -12,5 +12,7 @@ class TimeLine:
         return f"{self.__dict__}"
 
     # 솔팅 함수 추가
+    def __lt__(self, other):
+        return self.plan_date.end_date > other.plan_date.end_date
 
 
