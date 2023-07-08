@@ -1,7 +1,7 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate, Qt
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem, QVBoxLayout, QCompleter
+from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem, QVBoxLayout, QCompleter, QMenu
 
 from ui.class_location_item import LocationItem
 # from class_location_item import LocationItem
@@ -56,6 +56,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         self.calendarWidget.clicked.connect(lambda qdate: self.set_plan_date(qdate))
 
+        self.btn_refresh.clicked.connect(lambda x: self.set_refresh("refresh"))
+
         # 자동 완성 기능
         search_text = ["무상광자", "봄 감자", "광주인력개발원", "abc"]
         completer = QCompleter(search_text)
@@ -66,13 +68,29 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.rec_location_obj_list_from_db = self.main_window.db_connector.get_recommended_attraction()
         self.set_location_item_list()
         self.set_schedule_item_list()
-    #
+
+
     # def show_recommended_attraction(self):
     #     random.sample(self.rec_location_obj_list_from_db, k=4)
 
         self.folium_factory = FoliumMapFactory()  # Folium 팩토리
         self.web_view = QWebEngineView(self)
         self.excel_converter = ExcelConverter()  # 엑셀 저장 기능 인스턴스
+
+
+    # 화면 첫 시작 시 셋팅
+    def show(self):
+        self.stackedWidget.setCurrentIndex(0)
+        self.folium_factory.clear()
+        self.init_web_engine_layout()
+        self.init_title_label()
+
+        for top_obj in self.top_obj_list:
+            top_obj.setVisible(False)
+
+        self.label_select_date.setText("yyyy.mm.dd ~ yyyy.mm.dd")
+        super().show()
+
     # 캘린더 값을 받는 함수
     def set_plan_date(self, qdate_obj, option=None):
         qdate_obj: QDate
@@ -126,25 +144,13 @@ class SelectPlanner(QWidget, Ui_select_planner):
         elif option == 'end':
             self.label_end_date.setText(date_str)
 
-
     # 검색 기능 함수
     def search_location(self, s):
         search_text = self.lineEdit_search.text()
         self.stackedWidget.setCurrentIndex(2)
         self.label_gwd.setText("검색 결과")
         self.label_rec.setText("결과 목록")
-        # todo: 자동완성 기능 추가, 검색 결과 출력되도록 addwidget 기능 추가(이 부분을 어떻게 하면 좋을까)
-
-    # 화면 첫 시작 시 셋팅
-    def show(self):
-        self.stackedWidget.setCurrentIndex(0)
-        self.label_select_date.hide()
-        self.folium_factory.clear()
-        self.init_web_engine_layout()
-        self.lineEdit_search.hide()
-        self.toolBtn_search.hide()
-        self.init_title_label()
-        super().show()
+        # todo: 검색 결과 출력되도록 addwidget 기능 추가(이 부분을 어떻게 하면 좋을까)
 
     def init_web_engine_layout(self):
         if self.widget_folium.layout() is None:
@@ -176,6 +182,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
         layout.addWidget(rec_list_widget)
         self.setLayout(layout)
 
+        # self.temp = []
+
         for idx, list_item in enumerate(self.rec_location_obj_list_from_db):
             item = QListWidgetItem(rec_list_widget)
             custom_widget = LocationItem(list_item, self)
@@ -198,7 +206,6 @@ class SelectPlanner(QWidget, Ui_select_planner):
             select_location_list_widget.setItemWidget(item, custom_widget)
             select_location_list_widget.addItem(item)
 
-
     def add_list_location_item(self, name, address, category):
         temp_list = [name, address, category]
         self.rec_location_obj_list_from_db.append(temp_list)
@@ -206,6 +213,10 @@ class SelectPlanner(QWidget, Ui_select_planner):
     def add_list_schedule_item(self, name, address, category):
         temp_list = [name, address, category]
         self.schedule_list.append(temp_list)
+
+    def set_refresh(self, btn):
+        if btn == "refresh":
+            print("refresh 버튼을 클릭했습니다.")
 
     # def test_init(self):
     #     self.add_list_location_item("광주인력개발원", "광주광역시 광산구 소촌로 152번길 37", "기술학원")
@@ -215,6 +226,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
     #
     #     self.add_list_schedule_item("광주패밀리랜드", "광주광역시 북구 우치로 677 광주패밀리랜드", "테마공원")
     #     self.add_list_schedule_item("전남대학교", "광주광역시 북구 용봉로 77", "국립대학교")
+
 
     def page_move(self, btn):
         if btn == "back":
@@ -235,6 +247,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
             elif now_idx == 3:
                 self.stackedWidget.setCurrentIndex(1)
 
+
         elif btn == "select_date":  # 날짜 선택 완료 버튼 클릭 시
             print("날짜 선택 완료")
             self.stackedWidget.setCurrentIndex(1)
@@ -242,16 +255,10 @@ class SelectPlanner(QWidget, Ui_select_planner):
             for top_obj in self.top_obj_list:
                 top_obj.setVisible(True)
 
-            # todo : label_select_date 숨겨놓은 상태임, 보이게 하는 로직 필요
+            self.label_select_date.setText(f"{self.main_window.start_date_str} ~ {self.main_window.end_date_str}")
 
-        elif btn == "select_2_3":
-            check = QMessageBox.question(self, "확인", "일정에 담겼습니다.\n확인해보시겠습니까?",
-                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
 
-            if check == QMessageBox.Yes:
-                self.stackedWidget.setCurrentIndex(3)
-
-        elif btn == "move_list":    # 담긴 일정 목록으로 이동
+        elif btn == "move_list":
             self.stackedWidget.setCurrentIndex(3)
 
             for btn_hide in self.rec_btn_list:
@@ -287,5 +294,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
     def move_to_edit_timeline(self):
         self.stackedWidget.setCurrentIndex(3)
+
         for top_obj in self.top_obj_list:
             top_obj.setVisible(True)
+
+        self.label_select_date.setText("yyyy.mm.dd ~ yyyy.mm.dd")

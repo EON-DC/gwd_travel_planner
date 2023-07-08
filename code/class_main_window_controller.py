@@ -7,6 +7,7 @@ from ui.class_first_trip import FirstTrip
 from ui.class_recall_previous_trip import RecallPreviousTrip
 from ui.class_select_planner import SelectPlanner
 from ui.class_start_page import StartPage
+# from ui.class_location_item import LocationItem
 
 
 class WindowController(QWidget):
@@ -22,11 +23,6 @@ class WindowController(QWidget):
         self.first_trip = FirstTrip(self)  # 처음 여행 페이지
         self.prev_trip = RecallPreviousTrip(self)  # 이전 여행 페이지
         self.select_planner = SelectPlanner(self)  # 스케줄러 페이지
-
-
-
-
-
 
     def move_to_edit_timeline(self):
         print("수정화면으로 이동하였습니다.")
