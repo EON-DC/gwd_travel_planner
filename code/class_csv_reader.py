@@ -16,6 +16,8 @@ class CSVReader:
         assert isinstance(db_connector, DBConnector)
         self.data = None
         self.db_connector = db_connector
+        self.set_location_data_from_xlxs()
+        self.set_timeline_dummy_data()
 
     def set_location_data_from_xlxs(self):
         df = pd.read_excel(self.PATH, engine="openpyxl")

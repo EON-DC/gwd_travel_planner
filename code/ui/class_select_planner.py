@@ -76,7 +76,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         # selected list widget 트리거 설정
         self.listWidget_select_list.itemPressed.connect(lambda x: self.read_schedule_item_list())
-
+        # recommend widget 설정
+        self.clear_recommend_widget_inner()
 
     # 캘린더 값을 받는 함수
     def set_plan_date(self, qdate_obj, option=None):
@@ -247,14 +248,17 @@ class SelectPlanner(QWidget, Ui_select_planner):
         if btn == "refresh":
             print("refresh 버튼을 클릭했습니다.")
 
-    # def test_init(self):
-    #     self.add_list_location_item("광주인력개발원", "광주광역시 광산구 소촌로 152번길 37", "기술학원")
-    #     self.add_list_location_item("광주패밀리랜드", "광주광역시 북구 우치로 677 광주패밀리랜드", "테마공원")
-    #     self.add_list_location_item("전남대학교", "광주광역시 북구 용봉로 77", "국립대학교")
-    #     self.add_list_location_item("광주충장로우체국", "광주광역시 동구 충장로 94", "우체국")
-    #
-    #     self.add_list_schedule_item("광주패밀리랜드", "광주광역시 북구 우치로 677 광주패밀리랜드", "테마공원")
-    #     self.add_list_schedule_item("전남대학교", "광주광역시 북구 용봉로 77", "국립대학교")
+    def clear_recommend_widget_inner(self):
+        layout = self.frame_rec_attraction.layout()
+        frame = self.frame_rec_attraction
+        while layout.count():
+            item = layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+
+        for location in random.sample(self.rec_location_obj_list_from_db, 2):
+            layout.addWidget(LocationItem(self, location))
 
 
     def page_move(self, btn):
