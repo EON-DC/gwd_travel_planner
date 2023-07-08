@@ -13,8 +13,8 @@ def main():
     app = QtWidgets.QApplication(sys.argv)
     dbconn = DBConnector()
     # dbconn.create_tables()  # 배포전 확인! 이 라인 삭제해야함
-    # c_reader = CSVReader(dbconn)
-    # c_reader.set_location_data_from_xlxs() ## INSERT REAL DATA
+    c_reader = CSVReader(dbconn)
+    c_reader.set_timeline_dummy_data()
 
     main_window = class_main_window_controller.WindowController(dbconn)
     main_window.start_page.show()

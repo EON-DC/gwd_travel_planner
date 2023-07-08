@@ -17,6 +17,12 @@ class Ui_location_item(object):
         location_item.resize(410, 100)
         location_item.setMinimumSize(QtCore.QSize(410, 100))
         location_item.setMaximumSize(QtCore.QSize(410, 100))
+        location_item.setStyleSheet("#frame_2{\n"
+"background-color:#a20402;\n"
+"}\n"
+"#label_name{\n"
+"color: #e8eff0;\n"
+"}")
         self.horizontalLayout = QtWidgets.QHBoxLayout(location_item)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.frame = QtWidgets.QFrame(location_item)

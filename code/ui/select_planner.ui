@@ -26,7 +26,83 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#select_planner{background-color:#e8eff0;}</string>
+   <string notr="true">#select_planner{
+background-color:#e8eff0;
+}
+#frame_2{
+background-color:#550000;
+}
+#label_schedule_name,
+#label_select_date{
+color:#e8eff0;
+}
+#frame_4{
+background-color:#550000;
+}
+#frame_3{
+border-top: 2px solid #550000;
+}
+#btn_rec_attraction,
+#btn_rec_hotel{
+border-radius: 7px;
+border: 3px solid #550000;
+background-color: #e8eff0;
+color: #550000;
+}
+#btn_rec_attraction:hover,
+#btn_rec_hotel:hover{
+border-radius: 7px;
+background-color:#550000;
+color: #e8eff0;
+}
+#btn_rec_attraction:pressed,
+#btn_rec_hotel:pressed{
+border-radius: 7px;
+border: 3px solid #550000;
+background-color: #e8eff0;
+color: #550000;
+}
+#toolBtn_search{
+border-radius:7px;
+}
+#frame_33,
+#frame_34,
+#frame_35,
+#frame_36,
+#frame_37,
+#frame_39,
+#frame_38,
+#frame_40{
+border-radius: 7px;
+border : 3px solid #a20402;
+}
+#btn_selection_1,
+#btn_selection_2,
+#btn_selection_3,
+#btn_selection_4,
+#btn_refresh{
+border-radius: 6px;
+border: 4px solid #a20402;
+color: #a20402;
+}
+#btn_selection_1:hover,
+#btn_selection_2:hover,
+#btn_selection_3:hover,
+#btn_selection_4:hover,
+#btn_refresh:hover{
+background-color : #a20402;
+color: rgb(255, 255, 255);
+}
+#btn_selection_1:pressed,
+#btn_selection_2:pressed,
+#btn_selection_3:pressed,
+#btn_selection_4:pressed,
+#btn_refresh:pressed{
+border: 2px solid #a20402;
+color: #a20402;
+}
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_20">
    <property name="spacing">
@@ -317,45 +393,6 @@
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_search">
-              <property name="minimumSize">
-               <size>
-                <width>320</width>
-                <height>35</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>320</width>
-                <height>35</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolBtn_search">
-              <property name="minimumSize">
-               <size>
-                <width>38</width>
-                <height>38</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>38</width>
-                <height>38</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>../../brown_icons/search.svg</normaloff>../../brown_icons/search.svg</iconset>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>
@@ -465,14 +502,14 @@
                 <widget class="QPushButton" name="btn_rec_attraction">
                  <property name="minimumSize">
                   <size>
-                   <width>60</width>
-                   <height>60</height>
+                   <width>55</width>
+                   <height>55</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>60</width>
-                   <height>60</height>
+                   <width>55</width>
+                   <height>55</height>
                   </size>
                  </property>
                  <property name="font">
@@ -526,14 +563,14 @@
                 <widget class="QPushButton" name="btn_rec_hotel">
                  <property name="minimumSize">
                   <size>
-                   <width>60</width>
-                   <height>60</height>
+                   <width>55</width>
+                   <height>55</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>60</width>
-                   <height>60</height>
+                   <width>55</width>
+                   <height>55</height>
                   </size>
                  </property>
                  <property name="font">
@@ -737,7 +774,7 @@
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>3</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="page_select_date">
                   <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -994,7 +1031,14 @@
                       <item>
                        <widget class="QCalendarWidget" name="calendarWidget">
                         <property name="styleSheet">
-                         <string notr="true">background-color: rgb(229, 215, 215);</string>
+                         <string notr="true">QCalendarWidget QWidget{
+background-color:#e8eff0;
+color: green;
+}
+QCalendarWidget QAbstractItemView:enabled{
+color: black;
+}
+</string>
                         </property>
                        </widget>
                       </item>
@@ -1490,6 +1534,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_22">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_2">
                                     <property name="minimumSize">
@@ -1511,6 +1570,9 @@
                                     </property>
                                     <property name="text">
                                      <string>상호명</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -1538,6 +1600,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_21">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_3">
                                     <property name="minimumSize">
@@ -1559,6 +1636,9 @@
                                     </property>
                                     <property name="text">
                                      <string>주소</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -1625,6 +1705,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_23">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_7">
                                     <property name="minimumSize">
@@ -1646,6 +1741,9 @@
                                     </property>
                                     <property name="text">
                                      <string>상호명</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -1673,6 +1771,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_24">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_19">
                                     <property name="minimumSize">
@@ -1694,6 +1807,9 @@
                                     </property>
                                     <property name="text">
                                      <string>주소</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -1760,6 +1876,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_25">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_8">
                                     <property name="minimumSize">
@@ -1781,6 +1912,9 @@
                                     </property>
                                     <property name="text">
                                      <string>상호명</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -1808,6 +1942,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_26">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_20">
                                     <property name="minimumSize">
@@ -1829,6 +1978,9 @@
                                     </property>
                                     <property name="text">
                                      <string>주소</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -1895,6 +2047,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_27">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_9">
                                     <property name="minimumSize">
@@ -1943,6 +2110,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_28">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_21">
                                     <property name="minimumSize">
@@ -1964,6 +2146,9 @@
                                     </property>
                                     <property name="text">
                                      <string>주소</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -2196,6 +2381,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_29">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_13">
                                     <property name="minimumSize">
@@ -2217,6 +2417,9 @@
                                     </property>
                                     <property name="text">
                                      <string>상호명</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -2247,6 +2450,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_33">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_22">
                                     <property name="minimumSize">
@@ -2268,6 +2486,9 @@
                                     </property>
                                     <property name="text">
                                      <string>주소</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -2334,6 +2555,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_30">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_14">
                                     <property name="minimumSize">
@@ -2355,6 +2591,9 @@
                                     </property>
                                     <property name="text">
                                      <string>상호명</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -2382,6 +2621,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_34">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_23">
                                     <property name="minimumSize">
@@ -2403,6 +2657,9 @@
                                     </property>
                                     <property name="text">
                                      <string>주소</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -2469,6 +2726,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_31">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_16">
                                     <property name="minimumSize">
@@ -2490,6 +2762,9 @@
                                     </property>
                                     <property name="text">
                                      <string>상호명</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -2517,6 +2792,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_35">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_24">
                                     <property name="minimumSize">
@@ -2538,6 +2828,9 @@
                                     </property>
                                     <property name="text">
                                      <string>주소</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -2604,6 +2897,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_32">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_18">
                                     <property name="minimumSize">
@@ -2625,6 +2933,9 @@
                                     </property>
                                     <property name="text">
                                      <string>상호명</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -2655,6 +2966,21 @@
                                   <enum>QFrame::Raised</enum>
                                  </property>
                                  <layout class="QHBoxLayout" name="horizontalLayout_36">
+                                  <property name="spacing">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="leftMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="topMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="rightMargin">
+                                   <number>5</number>
+                                  </property>
+                                  <property name="bottomMargin">
+                                   <number>5</number>
+                                  </property>
                                   <item>
                                    <widget class="QLabel" name="label_25">
                                     <property name="minimumSize">
@@ -2676,6 +3002,9 @@
                                     </property>
                                     <property name="text">
                                      <string>주소</string>
+                                    </property>
+                                    <property name="wordWrap">
+                                     <bool>true</bool>
                                     </property>
                                    </widget>
                                   </item>
@@ -3036,13 +3365,13 @@
                              <widget class="QListWidget" name="listWidget_rec_location">
                               <property name="minimumSize">
                                <size>
-                                <width>420</width>
+                                <width>423</width>
                                 <height>425</height>
                                </size>
                               </property>
                               <property name="maximumSize">
                                <size>
-                                <width>420</width>
+                                <width>423</width>
                                 <height>425</height>
                                </size>
                               </property>
