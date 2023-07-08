@@ -23,12 +23,27 @@ class Ui_start_page(object):
 "border: 2px solid #a20402;\n"
 "color: #a20402;\n"
 "}\n"
+"#btn_new_trip:hover{\n"
+"background-color : #a20402;\n"
+"color: rgb(255, 255, 255);\n"
+"}\n"
+"#btn_new_trip:pressed{\n"
+"border: 2px solid #a20402;\n"
+"color: #a20402;\n"
+"}\n"
 "#btn_prev_trip{\n"
 "border-radius: 6px;\n"
 "border: 2px solid #a20402;\n"
 "color: #a20402;\n"
 "}\n"
-"")
+"#btn_prev_trip:hover{\n"
+"background-color : #a20402;\n"
+"color: rgb(255, 255, 255);\n"
+"}\n"
+"#btn_prev_trip:pressed{\n"
+"border: 2px solid #a20402;\n"
+"color: #a20402;\n"
+"}")
         self.verticalLayout = QtWidgets.QVBoxLayout(start_page)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setSpacing(0)

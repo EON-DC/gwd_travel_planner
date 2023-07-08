@@ -9,6 +9,7 @@ from ui.class_first_trip import FirstTrip
 from ui.class_recall_previous_trip import RecallPreviousTrip
 from ui.class_select_planner import SelectPlanner
 from ui.class_start_page import StartPage
+# from ui.class_location_item import LocationItem
 
 
 class WindowController(QWidget):

@@ -27,6 +27,7 @@ class LocationItem(QWidget, Ui_location_item):
         self.category = location_obj.category
         self.set_text_location()
         self.select_planner = select_planner
+
         self.mouseDoubleClickEvent = lambda x: self.set_web_location()
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.show_context_menu)
@@ -37,6 +38,36 @@ class LocationItem(QWidget, Ui_location_item):
 
     def set_web_location(self):
         self.select_planner.set_location_web_view(self.location_obj)
+
+    # # todo: 일단 대기
+    # def mousePressEvent(self, event):
+    #     now_idx = self.select_planner.stackedWidget.currentIndex()
+    #
+    #     if now_idx == 2:
+    #         if event.buttons() & Qt.RightButton:
+    #             self.right_clicked = "Right"
+    #             # print("Right")
+    #             self.select_planner.temp.append(self.label_name.text())
+    #             print(self.select_planner.temp)
+    #
+    #             # self.select_planner.right = "추가"
+    #             # print(self.select_planner.right)
+    #         else:
+    #             pass
+    #
+    #     elif now_idx == 3:
+    #         if event.buttons() & Qt.RightButton:
+    #             self.right_clicked = "Right"
+    #             # print("Right")
+    #             self.select_planner.temp.remove(self.label_name.text())
+    #             print(self.select_planner.temp)
+    #
+    #             # self.select_planner.right = "삭제"
+    #             # print(self.select_planner.right)
+    #         else:
+    #             pass
+
+
 
     def show_context_menu(self, position):
         context_menu = QMenu(self)
