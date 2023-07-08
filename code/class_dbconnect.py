@@ -456,8 +456,8 @@ class DBConnector:
 
 if __name__ == '__main__':
     conn = DBConnector(test_option=False)
-    # conn.create_tables()
-    # conn.make_fake_date_data()
+    conn.create_tables()
+    conn.make_fake_date_data()
     # plan_date = PlanDate(1, '2023-04-05', '2023-04-08')
     # # conn.insert_plan_date(plan_date)
     # # conn.insert_location(location)

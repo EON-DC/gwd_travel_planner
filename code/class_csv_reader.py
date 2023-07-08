@@ -1,3 +1,4 @@
+
 import numpy as np
 import pandas as pd
 
@@ -32,14 +33,18 @@ class CSVReader:
         conn.commit_db()
         conn.end_conn()
 
-    def set_location_data_from_xlxs(self):
+    def set_timeline_data_from_xlxs(self):
+        df = pd.read_excel("csv_data/gwd_location_data_cleaned_data.xlsx")
+
         conn = self.db_connector
         c = conn.start_conn()
 
-        c.execute("""insert into tb_location(ID, CATEGORY, ADDRESS, NAME, W_DO, g_do, DESCRIPTION)
-                     values (?, ?, ?, ?, ?, ?, ?)""",)
+        # c.execute("""insert into tb_location(ID, CATEGORY, ADDRESS, NAME, W_DO, g_do, DESCRIPTION)
+        #              values (?, ?, ?, ?, ?, ?, ?)""",)
+
+
         # todo : add real dummy data
-        conn.commit_db()
+        # conn.commit_db()
         conn.end_conn()
 
 
@@ -49,3 +54,4 @@ if __name__ == '__main__':
 
     reader = CSVReader(conn)
     reader.set_location_data_from_xlxs()
+
