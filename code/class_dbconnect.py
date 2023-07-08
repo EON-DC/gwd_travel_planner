@@ -126,7 +126,7 @@ class DBConnector:
         return find_result_list
 
     def find_recent_timelines(self):
-        all_timeline_list = conn.find_all_timeline()
+        all_timeline_list = self.find_all_timeline()
         all_timeline_list.sort()
         recent_timeline_list = list()
         for row in all_timeline_list[:10]:

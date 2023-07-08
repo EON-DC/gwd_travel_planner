@@ -1,8 +1,7 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate, Qt
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem, QVBoxLayout
-
+from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem, QVBoxLayout, QCompleter
 
 from ui.class_location_item import LocationItem
 # from class_location_item import LocationItem

@@ -8,7 +8,7 @@ class SaveScheduleItem(QWidget, Ui_save_schedule_item):
         super().__init__()
         self.setupUi(self)
         self.time_line = time_line_obj
-        self.name = self.time_line.name
+        self.name = self.time_line.trip_name
         self.start_date = self.time_line.plan_date.start_date
         self.end_date = self.time_line.plan_date.end_date
         self.main_window = main_window
