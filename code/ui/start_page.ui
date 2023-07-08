@@ -32,12 +32,27 @@ border-radius: 6px;
 border: 2px solid #a20402;
 color: #a20402;
 }
+#btn_new_trip:hover{
+background-color : #a20402;
+color: rgb(255, 255, 255);
+}
+#btn_new_trip:pressed{
+border: 2px solid #a20402;
+color: #a20402;
+}
 #btn_prev_trip{
 border-radius: 6px;
 border: 2px solid #a20402;
 color: #a20402;
 }
-</string>
+#btn_prev_trip:hover{
+background-color : #a20402;
+color: rgb(255, 255, 255);
+}
+#btn_prev_trip:pressed{
+border: 2px solid #a20402;
+color: #a20402;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
