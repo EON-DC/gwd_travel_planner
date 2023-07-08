@@ -15,6 +15,7 @@ class WindowController(QWidget):
         self.trip_name = None  # 여행 이름
         self.db_connector = db_connector    #db연결 인스턴스
         self.plan_date = None
+        self.timeline = None
         self.start_date_str = None
         self.end_date_str = None
         self.start_page = StartPage(self)  # 시작페이지 페이지
@@ -23,6 +24,9 @@ class WindowController(QWidget):
         self.select_planner = SelectPlanner(self)  # 스케줄러 페이지
         self.folium_factory = FoliumMapFactory()  # Folium 팩토리
         self.excel_converter = ExcelConverter()  # 엑셀 저장 기능 인스턴스
+
+
+
 
     def move_to_edit_timeline(self):
         print("수정화면으로 이동하였습니다.")
