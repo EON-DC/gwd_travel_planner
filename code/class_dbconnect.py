@@ -10,6 +10,7 @@ from class_location import Location
 from class_time_line import TimeLine
 
 
+
 class DBConnector:
     _instance = None
 
@@ -40,6 +41,8 @@ class DBConnector:
             self.conn.commit()
         else:
             raise f"cannot commit database! {self.__name__}"
+
+
 
     ## CREATE TABLES ======================================================================= ##
     def create_tables(self):

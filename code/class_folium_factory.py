@@ -25,7 +25,8 @@ class FoliumMapFactory:
         self.location = location_obj
         self.set_folium_map()
 
-    def clear_marker(self):
+    def clear(self):
+        self.location = None
         self.location_list = None
 
     def set_markers(self, location_list: list[Location]):

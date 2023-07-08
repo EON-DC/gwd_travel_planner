@@ -8,7 +8,7 @@ import openpyxl
 
 
 class ExcelConverter:
-    SAVE_PATH = "../csv_data/test.xlsx"
+    DEFAULT_SAVE_PATH = "../csv_data/trip_plan_gwd.xlsx"
     # 가운데 정렬
     ALIGN_CENTER = Alignment(horizontal='center', vertical='center')
 
@@ -36,6 +36,7 @@ class ExcelConverter:
         self.time_line = timeline_obj
         self.work_book = None
         self.worksheet = None
+        self.create_workbook()
 
     def create_workbook(self):
         # 워크북 생성
@@ -75,7 +76,6 @@ class ExcelConverter:
             for cell in row:
                 cell.font = self.FONT_BOLD
         ws['E1'].fill = self.FILL_BROWN
-
 
     def set_day_count_format(self, cell):
         cell.fill = self.FILL_BLUE
@@ -119,10 +119,12 @@ class ExcelConverter:
         self.set_sub_category_format(ws[f'D{row_index + 1}'])
         self.set_sub_category_format(ws[f'E{row_index + 1}'])
 
-    def save_excel_file(self):
+    def save_excel_file(self, path=None):
         wb = self.work_book
-        # 워크북 filename 으로 저장(없으면 새로생성)
-        wb.save(self.SAVE_PATH)
+        if path is not None:
+            wb.save(path)
+        else:
+            wb.save(self.DEFAULT_SAVE_PATH)
 
     def set_timeline_duration_str(self):
         ws = self.worksheet
@@ -132,7 +134,6 @@ class ExcelConverter:
         start_date_str = date_obj_to_str(start_date)
         end_date_str = date_obj_to_str(end_date)
         ws['C1'].value = f"{start_date_str} ~ {end_date_str}"
-
 
     def set_timeline(self, time_line_obj: TimeLine):
         # 변수, 함수 설정
@@ -160,7 +161,7 @@ class ExcelConverter:
                 current_row_idx += 1
             current_row_idx += 1
 
-    def add_location_row(self, row_idx, inner_idx, location_obj: Location=None):
+    def add_location_row(self, row_idx, inner_idx, location_obj: Location = None):
         ws = self.worksheet
         if location_obj is not None:
             category = location_obj.category
@@ -192,5 +193,3 @@ class ExcelConverter:
         self.set_fill_plain(ws[f'C{row_idx}'])
         self.set_fill_plain(ws[f'D{row_idx}'])
         self.set_fill_plain(ws[f'E{row_idx}'])
-
-
