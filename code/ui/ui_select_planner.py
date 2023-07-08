@@ -17,7 +17,83 @@ class Ui_select_planner(object):
         select_planner.resize(1000, 700)
         select_planner.setMinimumSize(QtCore.QSize(1000, 700))
         select_planner.setMaximumSize(QtCore.QSize(1000, 700))
-        select_planner.setStyleSheet("#select_planner{background-color:#e8eff0;}")
+        select_planner.setStyleSheet("#select_planner{\n"
+"background-color:#e8eff0;\n"
+"}\n"
+"#frame_2{\n"
+"background-color:#550000;\n"
+"}\n"
+"#label_schedule_name,\n"
+"#label_select_date{\n"
+"color:#e8eff0;\n"
+"}\n"
+"#frame_4{\n"
+"background-color:#550000;\n"
+"}\n"
+"#frame_3{\n"
+"border-top: 2px solid #550000;\n"
+"}\n"
+"#btn_rec_attraction,\n"
+"#btn_rec_hotel{\n"
+"border-radius: 7px;\n"
+"border: 3px solid #550000;\n"
+"background-color: #e8eff0;\n"
+"color: #550000;\n"
+"}\n"
+"#btn_rec_attraction:hover,\n"
+"#btn_rec_hotel:hover{\n"
+"border-radius: 7px;\n"
+"background-color:#550000;\n"
+"color: #e8eff0;\n"
+"}\n"
+"#btn_rec_attraction:pressed,\n"
+"#btn_rec_hotel:pressed{\n"
+"border-radius: 7px;\n"
+"border: 3px solid #550000;\n"
+"background-color: #e8eff0;\n"
+"color: #550000;\n"
+"}\n"
+"#toolBtn_search{\n"
+"border-radius:7px;\n"
+"}\n"
+"#frame_33,\n"
+"#frame_34,\n"
+"#frame_35,\n"
+"#frame_36,\n"
+"#frame_37,\n"
+"#frame_39,\n"
+"#frame_38,\n"
+"#frame_40{\n"
+"border-radius: 7px;\n"
+"border : 3px solid #a20402;\n"
+"}\n"
+"#btn_selection_1,\n"
+"#btn_selection_2,\n"
+"#btn_selection_3,\n"
+"#btn_selection_4,\n"
+"#btn_refresh{\n"
+"border-radius: 6px;\n"
+"border: 4px solid #a20402;\n"
+"color: #a20402;\n"
+"}\n"
+"#btn_selection_1:hover,\n"
+"#btn_selection_2:hover,\n"
+"#btn_selection_3:hover,\n"
+"#btn_selection_4:hover,\n"
+"#btn_refresh:hover{\n"
+"background-color : #a20402;\n"
+"color: rgb(255, 255, 255);\n"
+"}\n"
+"#btn_selection_1:pressed,\n"
+"#btn_selection_2:pressed,\n"
+"#btn_selection_3:pressed,\n"
+"#btn_selection_4:pressed,\n"
+"#btn_refresh:pressed{\n"
+"border: 2px solid #a20402;\n"
+"color: #a20402;\n"
+"}\n"
+"\n"
+"")
         self.verticalLayout_20 = QtWidgets.QVBoxLayout(select_planner)
         self.verticalLayout_20.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_20.setSpacing(0)
@@ -108,19 +184,6 @@ class Ui_select_planner(object):
         self.horizontalLayout_39.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_39.setSpacing(5)
         self.horizontalLayout_39.setObjectName("horizontalLayout_39")
-        self.lineEdit_search = QtWidgets.QLineEdit(self.frame_59)
-        self.lineEdit_search.setMinimumSize(QtCore.QSize(320, 35))
-        self.lineEdit_search.setMaximumSize(QtCore.QSize(320, 35))
-        self.lineEdit_search.setObjectName("lineEdit_search")
-        self.horizontalLayout_39.addWidget(self.lineEdit_search)
-        self.toolBtn_search = QtWidgets.QToolButton(self.frame_59)
-        self.toolBtn_search.setMinimumSize(QtCore.QSize(38, 38))
-        self.toolBtn_search.setMaximumSize(QtCore.QSize(38, 38))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("ui\\../../brown_icons/search.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolBtn_search.setIcon(icon)
-        self.toolBtn_search.setObjectName("toolBtn_search")
-        self.horizontalLayout_39.addWidget(self.toolBtn_search)
         self.horizontalLayout_41.addWidget(self.frame_59)
         self.verticalLayout_2.addWidget(self.frame_2)
         self.frame_3 = QtWidgets.QFrame(self.frame)
@@ -154,8 +217,8 @@ class Ui_select_planner(object):
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.btn_rec_attraction = QtWidgets.QPushButton(self.frame_24)
-        self.btn_rec_attraction.setMinimumSize(QtCore.QSize(60, 60))
-        self.btn_rec_attraction.setMaximumSize(QtCore.QSize(60, 60))
+        self.btn_rec_attraction.setMinimumSize(QtCore.QSize(55, 55))
+        self.btn_rec_attraction.setMaximumSize(QtCore.QSize(55, 55))
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         font.setPointSize(12)
@@ -173,8 +236,8 @@ class Ui_select_planner(object):
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.btn_rec_hotel = QtWidgets.QPushButton(self.frame_23)
-        self.btn_rec_hotel.setMinimumSize(QtCore.QSize(60, 60))
-        self.btn_rec_hotel.setMaximumSize(QtCore.QSize(60, 60))
+        self.btn_rec_hotel.setMinimumSize(QtCore.QSize(55, 55))
+        self.btn_rec_hotel.setMaximumSize(QtCore.QSize(55, 55))
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         font.setPointSize(12)
@@ -343,7 +406,14 @@ class Ui_select_planner(object):
         self.horizontalLayout_38 = QtWidgets.QHBoxLayout(self.widget_9)
         self.horizontalLayout_38.setObjectName("horizontalLayout_38")
         self.calendarWidget = QtWidgets.QCalendarWidget(self.widget_9)
-        self.calendarWidget.setStyleSheet("background-color: rgb(229, 215, 215);")
+        self.calendarWidget.setStyleSheet("QCalendarWidget QWidget{\n"
+"background-color:#e8eff0;\n"
+"color: green;\n"
+"}\n"
+"QCalendarWidget QAbstractItemView:enabled{\n"
+"color: black;\n"
+"}\n"
+"")
         self.calendarWidget.setObjectName("calendarWidget")
         self.horizontalLayout_38.addWidget(self.calendarWidget)
         self.verticalLayout_4.addWidget(self.widget_9)
@@ -518,6 +588,8 @@ class Ui_select_planner(object):
         self.frame_41.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_41.setObjectName("frame_41")
         self.horizontalLayout_22 = QtWidgets.QHBoxLayout(self.frame_41)
+        self.horizontalLayout_22.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_22.setSpacing(5)
         self.horizontalLayout_22.setObjectName("horizontalLayout_22")
         self.label_2 = QtWidgets.QLabel(self.frame_41)
         self.label_2.setMinimumSize(QtCore.QSize(78, 50))
@@ -525,6 +597,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_2.setFont(font)
+        self.label_2.setWordWrap(True)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout_22.addWidget(self.label_2)
         self.verticalLayout_18.addWidget(self.frame_41)
@@ -535,6 +608,8 @@ class Ui_select_planner(object):
         self.frame_42.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_42.setObjectName("frame_42")
         self.horizontalLayout_21 = QtWidgets.QHBoxLayout(self.frame_42)
+        self.horizontalLayout_21.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_21.setSpacing(5)
         self.horizontalLayout_21.setObjectName("horizontalLayout_21")
         self.label_3 = QtWidgets.QLabel(self.frame_42)
         self.label_3.setMinimumSize(QtCore.QSize(78, 70))
@@ -542,6 +617,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_3.setFont(font)
+        self.label_3.setWordWrap(True)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_21.addWidget(self.label_3)
         self.verticalLayout_18.addWidget(self.frame_42)
@@ -563,6 +639,8 @@ class Ui_select_planner(object):
         self.frame_43.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_43.setObjectName("frame_43")
         self.horizontalLayout_23 = QtWidgets.QHBoxLayout(self.frame_43)
+        self.horizontalLayout_23.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_23.setSpacing(5)
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
         self.label_7 = QtWidgets.QLabel(self.frame_43)
         self.label_7.setMinimumSize(QtCore.QSize(78, 50))
@@ -570,6 +648,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_7.setFont(font)
+        self.label_7.setWordWrap(True)
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_23.addWidget(self.label_7)
         self.verticalLayout_19.addWidget(self.frame_43)
@@ -580,6 +659,8 @@ class Ui_select_planner(object):
         self.frame_44.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_44.setObjectName("frame_44")
         self.horizontalLayout_24 = QtWidgets.QHBoxLayout(self.frame_44)
+        self.horizontalLayout_24.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_24.setSpacing(5)
         self.horizontalLayout_24.setObjectName("horizontalLayout_24")
         self.label_19 = QtWidgets.QLabel(self.frame_44)
         self.label_19.setMinimumSize(QtCore.QSize(78, 70))
@@ -587,6 +668,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_19.setFont(font)
+        self.label_19.setWordWrap(True)
         self.label_19.setObjectName("label_19")
         self.horizontalLayout_24.addWidget(self.label_19)
         self.verticalLayout_19.addWidget(self.frame_44)
@@ -608,6 +690,8 @@ class Ui_select_planner(object):
         self.frame_45.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_45.setObjectName("frame_45")
         self.horizontalLayout_25 = QtWidgets.QHBoxLayout(self.frame_45)
+        self.horizontalLayout_25.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_25.setSpacing(5)
         self.horizontalLayout_25.setObjectName("horizontalLayout_25")
         self.label_8 = QtWidgets.QLabel(self.frame_45)
         self.label_8.setMinimumSize(QtCore.QSize(78, 50))
@@ -615,6 +699,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_8.setFont(font)
+        self.label_8.setWordWrap(True)
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_25.addWidget(self.label_8)
         self.verticalLayout_21.addWidget(self.frame_45)
@@ -625,6 +710,8 @@ class Ui_select_planner(object):
         self.frame_46.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_46.setObjectName("frame_46")
         self.horizontalLayout_26 = QtWidgets.QHBoxLayout(self.frame_46)
+        self.horizontalLayout_26.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_26.setSpacing(5)
         self.horizontalLayout_26.setObjectName("horizontalLayout_26")
         self.label_20 = QtWidgets.QLabel(self.frame_46)
         self.label_20.setMinimumSize(QtCore.QSize(78, 70))
@@ -632,6 +719,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_20.setFont(font)
+        self.label_20.setWordWrap(True)
         self.label_20.setObjectName("label_20")
         self.horizontalLayout_26.addWidget(self.label_20)
         self.verticalLayout_21.addWidget(self.frame_46)
@@ -653,6 +741,8 @@ class Ui_select_planner(object):
         self.frame_47.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_47.setObjectName("frame_47")
         self.horizontalLayout_27 = QtWidgets.QHBoxLayout(self.frame_47)
+        self.horizontalLayout_27.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_27.setSpacing(5)
         self.horizontalLayout_27.setObjectName("horizontalLayout_27")
         self.label_9 = QtWidgets.QLabel(self.frame_47)
         self.label_9.setMinimumSize(QtCore.QSize(78, 50))
@@ -670,6 +760,8 @@ class Ui_select_planner(object):
         self.frame_48.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_48.setObjectName("frame_48")
         self.horizontalLayout_28 = QtWidgets.QHBoxLayout(self.frame_48)
+        self.horizontalLayout_28.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_28.setSpacing(5)
         self.horizontalLayout_28.setObjectName("horizontalLayout_28")
         self.label_21 = QtWidgets.QLabel(self.frame_48)
         self.label_21.setMinimumSize(QtCore.QSize(78, 70))
@@ -677,6 +769,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_21.setFont(font)
+        self.label_21.setWordWrap(True)
         self.label_21.setObjectName("label_21")
         self.horizontalLayout_28.addWidget(self.label_21)
         self.verticalLayout_23.addWidget(self.frame_48)
@@ -754,6 +847,8 @@ class Ui_select_planner(object):
         self.frame_49.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_49.setObjectName("frame_49")
         self.horizontalLayout_29 = QtWidgets.QHBoxLayout(self.frame_49)
+        self.horizontalLayout_29.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_29.setSpacing(5)
         self.horizontalLayout_29.setObjectName("horizontalLayout_29")
         self.label_13 = QtWidgets.QLabel(self.frame_49)
         self.label_13.setMinimumSize(QtCore.QSize(78, 50))
@@ -761,6 +856,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_13.setFont(font)
+        self.label_13.setWordWrap(True)
         self.label_13.setObjectName("label_13")
         self.horizontalLayout_29.addWidget(self.label_13)
         self.verticalLayout_27.addWidget(self.frame_49)
@@ -772,6 +868,8 @@ class Ui_select_planner(object):
         self.frame_50.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_50.setObjectName("frame_50")
         self.horizontalLayout_33 = QtWidgets.QHBoxLayout(self.frame_50)
+        self.horizontalLayout_33.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_33.setSpacing(5)
         self.horizontalLayout_33.setObjectName("horizontalLayout_33")
         self.label_22 = QtWidgets.QLabel(self.frame_50)
         self.label_22.setMinimumSize(QtCore.QSize(78, 70))
@@ -779,6 +877,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_22.setFont(font)
+        self.label_22.setWordWrap(True)
         self.label_22.setObjectName("label_22")
         self.horizontalLayout_33.addWidget(self.label_22)
         self.verticalLayout_27.addWidget(self.frame_50)
@@ -800,6 +899,8 @@ class Ui_select_planner(object):
         self.frame_51.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_51.setObjectName("frame_51")
         self.horizontalLayout_30 = QtWidgets.QHBoxLayout(self.frame_51)
+        self.horizontalLayout_30.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_30.setSpacing(5)
         self.horizontalLayout_30.setObjectName("horizontalLayout_30")
         self.label_14 = QtWidgets.QLabel(self.frame_51)
         self.label_14.setMinimumSize(QtCore.QSize(78, 50))
@@ -807,6 +908,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_14.setFont(font)
+        self.label_14.setWordWrap(True)
         self.label_14.setObjectName("label_14")
         self.horizontalLayout_30.addWidget(self.label_14)
         self.verticalLayout_26.addWidget(self.frame_51)
@@ -817,6 +919,8 @@ class Ui_select_planner(object):
         self.frame_52.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_52.setObjectName("frame_52")
         self.horizontalLayout_34 = QtWidgets.QHBoxLayout(self.frame_52)
+        self.horizontalLayout_34.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_34.setSpacing(5)
         self.horizontalLayout_34.setObjectName("horizontalLayout_34")
         self.label_23 = QtWidgets.QLabel(self.frame_52)
         self.label_23.setMinimumSize(QtCore.QSize(78, 70))
@@ -824,6 +928,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_23.setFont(font)
+        self.label_23.setWordWrap(True)
         self.label_23.setObjectName("label_23")
         self.horizontalLayout_34.addWidget(self.label_23)
         self.verticalLayout_26.addWidget(self.frame_52)
@@ -845,6 +950,8 @@ class Ui_select_planner(object):
         self.frame_53.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_53.setObjectName("frame_53")
         self.horizontalLayout_31 = QtWidgets.QHBoxLayout(self.frame_53)
+        self.horizontalLayout_31.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_31.setSpacing(5)
         self.horizontalLayout_31.setObjectName("horizontalLayout_31")
         self.label_16 = QtWidgets.QLabel(self.frame_53)
         self.label_16.setMinimumSize(QtCore.QSize(78, 50))
@@ -852,6 +959,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_16.setFont(font)
+        self.label_16.setWordWrap(True)
         self.label_16.setObjectName("label_16")
         self.horizontalLayout_31.addWidget(self.label_16)
         self.verticalLayout_25.addWidget(self.frame_53)
@@ -862,6 +970,8 @@ class Ui_select_planner(object):
         self.frame_54.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_54.setObjectName("frame_54")
         self.horizontalLayout_35 = QtWidgets.QHBoxLayout(self.frame_54)
+        self.horizontalLayout_35.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_35.setSpacing(5)
         self.horizontalLayout_35.setObjectName("horizontalLayout_35")
         self.label_24 = QtWidgets.QLabel(self.frame_54)
         self.label_24.setMinimumSize(QtCore.QSize(78, 70))
@@ -869,6 +979,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_24.setFont(font)
+        self.label_24.setWordWrap(True)
         self.label_24.setObjectName("label_24")
         self.horizontalLayout_35.addWidget(self.label_24)
         self.verticalLayout_25.addWidget(self.frame_54)
@@ -890,6 +1001,8 @@ class Ui_select_planner(object):
         self.frame_55.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_55.setObjectName("frame_55")
         self.horizontalLayout_32 = QtWidgets.QHBoxLayout(self.frame_55)
+        self.horizontalLayout_32.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_32.setSpacing(5)
         self.horizontalLayout_32.setObjectName("horizontalLayout_32")
         self.label_18 = QtWidgets.QLabel(self.frame_55)
         self.label_18.setMinimumSize(QtCore.QSize(78, 50))
@@ -897,6 +1010,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_18.setFont(font)
+        self.label_18.setWordWrap(True)
         self.label_18.setObjectName("label_18")
         self.horizontalLayout_32.addWidget(self.label_18)
         self.verticalLayout_24.addWidget(self.frame_55)
@@ -908,6 +1022,8 @@ class Ui_select_planner(object):
         self.frame_56.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_56.setObjectName("frame_56")
         self.horizontalLayout_36 = QtWidgets.QHBoxLayout(self.frame_56)
+        self.horizontalLayout_36.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_36.setSpacing(5)
         self.horizontalLayout_36.setObjectName("horizontalLayout_36")
         self.label_25 = QtWidgets.QLabel(self.frame_56)
         self.label_25.setMinimumSize(QtCore.QSize(78, 70))
@@ -915,6 +1031,7 @@ class Ui_select_planner(object):
         font = QtGui.QFont()
         font.setFamily("G마켓 산스 TTF Medium")
         self.label_25.setFont(font)
+        self.label_25.setWordWrap(True)
         self.label_25.setObjectName("label_25")
         self.horizontalLayout_36.addWidget(self.label_25)
         self.verticalLayout_24.addWidget(self.frame_56)
@@ -1043,8 +1160,8 @@ class Ui_select_planner(object):
         self.horizontalLayout_42.setSpacing(0)
         self.horizontalLayout_42.setObjectName("horizontalLayout_42")
         self.listWidget_rec_location = QtWidgets.QListWidget(self.frame_61)
-        self.listWidget_rec_location.setMinimumSize(QtCore.QSize(420, 425))
-        self.listWidget_rec_location.setMaximumSize(QtCore.QSize(420, 425))
+        self.listWidget_rec_location.setMinimumSize(QtCore.QSize(423, 425))
+        self.listWidget_rec_location.setMaximumSize(QtCore.QSize(423, 425))
         self.listWidget_rec_location.setObjectName("listWidget_rec_location")
         self.horizontalLayout_42.addWidget(self.listWidget_rec_location)
         self.horizontalLayout_18.addWidget(self.frame_61)
@@ -1185,7 +1302,7 @@ class Ui_select_planner(object):
         self.verticalLayout_20.addWidget(self.frame)
 
         self.retranslateUi(select_planner)
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(select_planner)
 
     def retranslateUi(self, select_planner):
@@ -1193,7 +1310,6 @@ class Ui_select_planner(object):
         select_planner.setWindowTitle(_translate("select_planner", "Form"))
         self.label_schedule_name.setText(_translate("select_planner", "스케줄명"))
         self.label_select_date.setText(_translate("select_planner", "<html><head/><body><p>yyyy.mm.dd ~ yyyy.mm.dd</p></body></html>"))
-        self.toolBtn_search.setText(_translate("select_planner", "..."))
         self.btn_rec_attraction.setText(_translate("select_planner", "장소"))
         self.btn_rec_hotel.setText(_translate("select_planner", "호텔"))
         self.label.setText(_translate("select_planner", "folium"))
