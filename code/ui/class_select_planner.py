@@ -31,12 +31,13 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.schedule_list = list()
         # self.rec_location_obj_list_from_db = list()
 
-        self.top_obj_list = [self.label_select_date, self.lineEdit_search, self.toolBtn_search]
+        # self.top_obj_list = [self.label_select_date, self.lineEdit_search, self.toolBtn_search]
         self.rec_btn_list = [self.btn_rec_attraction, self.btn_rec_hotel]
 
         # 상단 객체 초기 숨김
-        for top_obj in self.top_obj_list:
-            top_obj.setVisible(False)
+        # for top_obj in self.top_obj_list:
+        #     top_obj.setVisible(False)
+        self.label_select_date.setVisible(False)
 
         # 왼쪽 상단 버튼 초기 숨김
         for btn_hide in self.rec_btn_list:
@@ -58,17 +59,17 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         self.btn_selection_4.clicked.connect(lambda x: self.save_schedule("save"))
 
-        self.toolBtn_search.clicked.connect(lambda x: self.search_location("search"))
+        # self.toolBtn_search.clicked.connect(lambda x: self.search_location("search"))
 
         self.calendarWidget.clicked.connect(lambda qdate: self.set_plan_date(qdate))
 
         self.btn_refresh.clicked.connect(lambda x: self.set_refresh("refresh"))
 
         # 자동 완성 기능
-        search_text = ["무상광자", "봄 감자", "광주인력개발원", "abc"]
-        completer = QCompleter(search_text)
-
-        self.lineEdit_search.setCompleter(completer)
+        # search_text = ["무상광자", "봄 감자", "광주인력개발원", "abc"]
+        # completer = QCompleter(search_text)
+        #
+        # self.lineEdit_search.setCompleter(completer)
 
         # self.test_init()
         self.rec_location_obj_list_from_db = self.main_window.db_connector.find_all_location()
@@ -139,12 +140,12 @@ class SelectPlanner(QWidget, Ui_select_planner):
             self.label_end_date.setText(date_str)
 
     # 검색 기능 함수
-    def search_location(self, s):
-        search_text = self.lineEdit_search.text()
-        self.stackedWidget.setCurrentIndex(2)
-        self.label_gwd.setText("검색 결과")
-        self.label_rec.setText("결과 목록")
-        # todo: 검색 결과 출력되도록 addwidget 기능 추가(이 부분을 어떻게 하면 좋을까)
+    # def search_location(self, s):
+    #     search_text = self.lineEdit_search.text()
+    #     self.stackedWidget.setCurrentIndex(2)
+    #     self.label_gwd.setText("검색 결과")
+    #     self.label_rec.setText("결과 목록")
+    #     # todo: 검색 결과 출력되도록 addwidget 기능 추가(이 부분을 어떻게 하면 좋을까)
 
     # 화면 첫 시작 시 셋팅
     def show(self):
@@ -152,8 +153,9 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.folium_factory.clear()
         self.init_web_engine_layout()
 
-        for top_obj in self.top_obj_list:
-            top_obj.setVisible(False)
+        # for top_obj in self.top_obj_list:
+        #     top_obj.setVisible(False)
+        self.label_select_date.setVisible(False)
 
         self.label_select_date.setText("yyyy.mm.dd ~ yyyy.mm.dd")
         self.init_title_label()
@@ -316,8 +318,9 @@ class SelectPlanner(QWidget, Ui_select_planner):
                 self.close()
 
             if now_idx == 1:
-                for top_obj in self.top_obj_list:
-                    top_obj.setVisible(False)
+                # for top_obj in self.top_obj_list:
+                #     top_obj.setVisible(False)
+                self.label_select_date.setVisible(False)
 
             elif now_idx == 3:
                 self.stackedWidget.setCurrentIndex(1)
@@ -327,8 +330,9 @@ class SelectPlanner(QWidget, Ui_select_planner):
             print("날짜 선택 완료")
             self.stackedWidget.setCurrentIndex(1)
 
-            for top_obj in self.top_obj_list:
-                top_obj.setVisible(True)
+            # for top_obj in self.top_obj_list:
+            #     top_obj.setVisible(True)
+            self.label_select_date.setVisible(True)
 
             self.label_select_date.setText(f"{self.main_window.start_date_str} ~ {self.main_window.end_date_str}")
 
@@ -387,7 +391,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
     def move_to_edit_timeline(self):
         self.stackedWidget.setCurrentIndex(3)
 
-        for top_obj in self.top_obj_list:
-            top_obj.setVisible(True)
+        # for top_obj in self.top_obj_list:
+        #     top_obj.setVisible(True)
+        self.label_select_date.setVisible(True)
 
         self.label_select_date.setText("yyyy.mm.dd ~ yyyy.mm.dd")

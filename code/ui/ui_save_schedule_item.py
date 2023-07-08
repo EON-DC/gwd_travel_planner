@@ -17,6 +17,12 @@ class Ui_save_schedule_item(object):
         save_schedule_item.resize(528, 100)
         save_schedule_item.setMinimumSize(QtCore.QSize(528, 100))
         save_schedule_item.setMaximumSize(QtCore.QSize(528, 100))
+        save_schedule_item.setStyleSheet("#frame_2{\n"
+"background-color:#a20402;\n"
+"}\n"
+"#label_schedule_name{\n"
+"color: #e8eff0;\n"
+"}")
         self.verticalLayout = QtWidgets.QVBoxLayout(save_schedule_item)
         self.verticalLayout.setObjectName("verticalLayout")
         self.frame = QtWidgets.QFrame(save_schedule_item)

@@ -25,6 +25,14 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#frame_2{
+background-color:#a20402;
+}
+#label_schedule_name{
+color: #e8eff0;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QFrame" name="frame">

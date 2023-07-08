@@ -15,7 +15,7 @@ class LocationItem(QWidget, Ui_location_item):
         if isinstance(location_obj, int):
             dummy_data = location_obj  # int 1
             self.frame_2.setStyleSheet("""* {background-color:#232323;}""")
-            self.label_name.setStyleSheet("""color: white;""")
+            self.label_name.setStyleSheet("""* {color: #e8eff0;}""")
             self.name = f"{dummy_data} 일차"
             self.address = '드래그를 하여 일정 순서를 정해주세요'
             self.category = '구분'
