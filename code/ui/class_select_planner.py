@@ -1,7 +1,8 @@
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate, Qt
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem, QVBoxLayout, QCompleter
+from PyQt5.QtWidgets import QWidget, QMessageBox, QBoxLayout, QListWidgetItem, QVBoxLayout, QCompleter, QMenu, QAction, \
+    QFileDialog, QListWidget
 
 from ui.class_location_item import LocationItem
 # from class_location_item import LocationItem
@@ -11,9 +12,10 @@ from ui.ui_select_planner import Ui_select_planner
 from class_plan_date import PlanDate
 
 import random
-
 from class_folium_factory import FoliumMapFactory
 from class_excel_converter import ExcelConverter
+
+from class_time_line import TimeLine
 
 
 class SelectPlanner(QWidget, Ui_select_planner):
@@ -55,7 +57,6 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.toolBtn_search.clicked.connect(lambda x: self.search_location("search"))
 
         self.calendarWidget.clicked.connect(lambda qdate: self.set_plan_date(qdate))
-
         # 자동 완성 기능
         search_text = ["무상광자", "봄 감자", "광주인력개발원", "abc"]
         completer = QCompleter(search_text)
@@ -65,14 +66,18 @@ class SelectPlanner(QWidget, Ui_select_planner):
         # self.test_init()
         self.rec_location_obj_list_from_db = self.main_window.db_connector.get_recommended_attraction()
         self.set_location_item_list()
-        self.set_schedule_item_list()
-    #
-    # def show_recommended_attraction(self):
-    #     random.sample(self.rec_location_obj_list_from_db, k=4)
+        # self.set_schedule_item_list()
+        #
+        # def show_recommended_attraction(self):
+        #     random.sample(self.rec_location_obj_list_from_db, k=4)
 
         self.folium_factory = FoliumMapFactory()  # Folium 팩토리
         self.web_view = QWebEngineView(self)
         self.excel_converter = ExcelConverter()  # 엑셀 저장 기능 인스턴스
+
+        # selected list widget 트리거 설정
+        self.listWidget_select_list.itemPressed.connect(lambda x: self.read_schedule_item_list())
+
     # 캘린더 값을 받는 함수
     def set_plan_date(self, qdate_obj, option=None):
         qdate_obj: QDate
@@ -126,7 +131,6 @@ class SelectPlanner(QWidget, Ui_select_planner):
         elif option == 'end':
             self.label_end_date.setText(date_str)
 
-
     # 검색 기능 함수
     def search_location(self, s):
         search_text = self.lineEdit_search.text()
@@ -144,6 +148,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.lineEdit_search.hide()
         self.toolBtn_search.hide()
         self.init_title_label()
+        self.set_schedule_item_list()
         super().show()
 
     def init_web_engine_layout(self):
@@ -170,7 +175,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
             self.label_schedule_name.setText("스케줄명")
 
     # 추천 장소 리스트 출력 함수 + 검색 결과 리스트 출력
-    def set_location_item_list(self):       # 주소 리스트위젯화
+    def set_location_item_list(self):  # 주소 리스트위젯화
         layout = QBoxLayout(QBoxLayout.TopToBottom)
         rec_list_widget = self.listWidget_rec_location  # 리스트위젯 인스턴스화
         layout.addWidget(rec_list_widget)
@@ -178,26 +183,55 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         for idx, list_item in enumerate(self.rec_location_obj_list_from_db):
             item = QListWidgetItem(rec_list_widget)
-            custom_widget = LocationItem(list_item, self)
+            custom_widget = LocationItem(self, list_item)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
             rec_list_widget.setItemWidget(item, custom_widget)
             rec_list_widget.addItem(item)
 
-
     # 선택한 일정 리스트 출력 함수
-    def set_schedule_item_list(self):        # todo: 타임라인에 맞춰 리스트화 시키기
+    def set_schedule_item_list(self):  # todo: 타임라인에 맞춰 리스트화 시키기
+        self.listWidget_select_list.clear()
         layout = QBoxLayout(QBoxLayout.TopToBottom)
         select_location_list_widget = self.listWidget_select_list  # 선택 목록 리스트위젯 인스턴스화
         layout.addWidget(select_location_list_widget)
         self.setLayout(layout)
 
-        for idx, list_item in enumerate(self.schedule_list):
+        copy_schedule_list = self.schedule_list.copy()
+        duration = 1
+        if self.main_window.start_date_str is not None and self.main_window.end_date_str is not None:
+            duration = PlanDate.get_duration(self.main_window.start_date_str, self.main_window.end_date_str)
+
+        for i in range(duration, 0, -1):
+            copy_schedule_list.insert(0, i)
+
+        for idx, list_item in enumerate(copy_schedule_list):
             item = QListWidgetItem(select_location_list_widget)
-            custom_widget = LocationItem(list_item, self)
+            custom_widget = LocationItem(self, list_item)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
             select_location_list_widget.setItemWidget(item, custom_widget)
             select_location_list_widget.addItem(item)
 
+    # select location 읽어들이고 현 schedule list로 저장하기
+    def read_schedule_item_list(self):
+        list_widget = self.listWidget_select_list
+        temp_list = list()
+        result_list = list()
+        index = 0
+        while index < list_widget.count():
+            item = list_widget.item(index)
+            customWidget = list_widget.itemWidget(item)
+            customWidget: LocationItem
+            if customWidget.category == '구분':
+                if index != 0:
+                    result_list.append(temp_list.copy())
+                    temp_list.clear()
+                index += 1
+                continue
+            temp_list.append(customWidget.location_obj)
+            index += 1
+        result_list.append(temp_list)
+        self.schedule_list.clear()
+        self.schedule_list = result_list
 
     def add_list_location_item(self, name, address, category):
         temp_list = [name, address, category]
@@ -251,9 +285,10 @@ class SelectPlanner(QWidget, Ui_select_planner):
             if check == QMessageBox.Yes:
                 self.stackedWidget.setCurrentIndex(3)
 
-        elif btn == "move_list":    # 담긴 일정 목록으로 이동
+        elif btn == "move_list":  # 담긴 일정 목록으로 이동
             self.stackedWidget.setCurrentIndex(3)
-
+            # 스케줄 일정대로 위젯 생성
+            self.set_schedule_item_list()
             for btn_hide in self.rec_btn_list:
                 btn_hide.setVisible(False)
 
@@ -272,18 +307,30 @@ class SelectPlanner(QWidget, Ui_select_planner):
             self.label_rec.setText("추천 호텔")
 
     def save_schedule(self, btn):
+        # mainwindow timeline obj 저장 로직
+        self.read_schedule_item_list()
+        # location list 로 변환
+        location_list = self.schedule_list.copy()
+        s_date = self.main_window.start_date_str
+        e_date = self.main_window.end_date_str
+        t_name = self.main_window.trip_name
+        time_line = self.main_window.db_connector.create_time_line_obj(location_list,s_date, e_date, t_name)
+        self.main_window.timeline = time_line
+        print(time_line)
+
+        # db connector로 timeline obj 생성 및 main window 저장
+
         print("일정 선택 완료")
-        check = QMessageBox.about(self, "확인", "일정이 저장되었습니다.")
+        check = QMessageBox.about(self, "확인", "일정이 저장되었습니다. 불러오기를 통해 확인하실 수 있습니다.")
+        save_excel_dialog = QMessageBox.question(self, "엑셀 저장", "엑셀파일로 저장하시겠습니까?")
+        if save_excel_dialog == QMessageBox.Yes:
+            save_path_file_name, _, = QFileDialog.getSaveFileName(self, '일정 파일 저장', './')
+            self.excel_converter.set_timeline(self.main_window.timeline)
+            self.excel_converter.save_excel_file(save_path_file_name)
+
         self.main_window.first_trip.close()
         self.main_window.prev_trip.close()
         self.close()
-
-    # def set_btn_trigger(self):
-    #     self.btn_save.clicked.connect(lambda state: self.save_object('some_obj'))
-    #
-    # def save_object(self, some_obj):
-    #     file_name, _, = QFileDialog.getSaveFileName(self, 'Save file', './')
-    #     # todo: save excel logic
 
     def move_to_edit_timeline(self):
         self.stackedWidget.setCurrentIndex(3)

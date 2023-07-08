@@ -1,8 +1,10 @@
+import random
 
 import numpy as np
 import pandas as pd
 
 from class_dbconnect import DBConnector
+from class_plan_date import PlanDate
 
 
 class CSVReader:
@@ -11,6 +13,7 @@ class CSVReader:
     ENCODING_TYPE = "WIN"
 
     def __init__(self, db_connector):
+        assert isinstance(db_connector, DBConnector)
         self.data = None
         self.db_connector = db_connector
 
@@ -33,25 +36,27 @@ class CSVReader:
         conn.commit_db()
         conn.end_conn()
 
-    def set_timeline_data_from_xlxs(self):
-        df = pd.read_excel("csv_data/gwd_location_data_cleaned_data.xlsx")
+    def set_timeline_dummy_data(self):
 
-        conn = self.db_connector
-        c = conn.start_conn()
+        location_list = self.db_connector.find_all_location()
 
-        # c.execute("""insert into tb_location(ID, CATEGORY, ADDRESS, NAME, W_DO, g_do, DESCRIPTION)
-        #              values (?, ?, ?, ?, ?, ?, ?)""",)
+        sample_list = random.sample(location_list, 10)
+        inserted_location_list = [sample_list[0:3], sample_list[3:5], sample_list[5:10]]
 
+        timeline_obj = self.db_connector.create_time_line_obj(inserted_location_list, "2022-03-06", "2022-03-08", '테스트 여행')
 
-        # todo : add real dummy data
-        # conn.commit_db()
-        conn.end_conn()
 
 
 if __name__ == '__main__':
-    conn = DBConnector(test_option=True)
+    conn = DBConnector(test_option=False)
     conn.create_tables()
 
     reader = CSVReader(conn)
     reader.set_location_data_from_xlxs()
-
+    reader.set_timeline_dummy_data()
+    # for plan_date in conn.find_all_plan_date():
+    #     print(plan_date)
+    for location in conn.find_all_location():
+        print(location)
+    for timeline in conn.find_all_timeline():
+        print(timeline)

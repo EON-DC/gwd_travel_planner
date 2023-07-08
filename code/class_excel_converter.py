@@ -122,7 +122,7 @@ class ExcelConverter:
     def save_excel_file(self, path=None):
         wb = self.work_book
         if path is not None:
-            wb.save(path)
+            wb.save(f"{path}.xlsx")
         else:
             wb.save(self.DEFAULT_SAVE_PATH)
 
@@ -136,6 +136,7 @@ class ExcelConverter:
         ws['C1'].value = f"{start_date_str} ~ {end_date_str}"
 
     def set_timeline(self, time_line_obj: TimeLine):
+        print(time_line_obj)
         # 변수, 함수 설정
         self.time_line = time_line_obj
         time_line = self.time_line
@@ -173,12 +174,12 @@ class ExcelConverter:
             name = ''
             address = ''
 
-        if category == '명소':
+        if category == '명소' or category == 1:
             ws[f'A{row_idx}'].value = inner_idx
             ws[f'A{row_idx}'].fill = self.FILL_IVORY
             ws[f'B{row_idx}'].value = '명소'
 
-        elif category == '숙소':
+        elif category == '숙소'  or category == 0:
             ws[f'A{row_idx}'].value = '*'
             ws[f'A{row_idx}'].fill = self.FILL_GREEN
             ws[f'B{row_idx}'].value = '숙박'

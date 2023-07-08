@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import *
 
 
 from class_excel_converter import ExcelConverter
+from class_time_line import TimeLine
+from class_plan_date import PlanDate
 from ui.class_first_trip import FirstTrip
 from ui.class_recall_previous_trip import RecallPreviousTrip
 from ui.class_select_planner import SelectPlanner
@@ -25,7 +27,20 @@ class WindowController(QWidget):
 
 
 
-
+    def set_timeline(self, time_line_obj):
+        if isinstance(time_line_obj, TimeLine):
+            self.timeline = time_line_obj
+            self.plan_date = time_line_obj.plan_date
+            self.start_date_str = PlanDate.date_obj_to_str(time_line_obj.plan_date.start_date)
+            self.end_date_str = PlanDate.date_obj_to_str(time_line_obj.plan_date.end_date)
+            self.trip_name = time_line_obj.trip_name
+            # 리스트 수정
+            self.select_planner.schedule_list = list()
+            for row in time_line_obj.location_list:
+                for location in row:
+                    self.select_planner.schedule_list.append(location)
+        else:
+            QMessageBox.about(self, "알림", "이전 저장 정보를 불러오는데 실패했습니다.")
 
 
     def move_to_edit_timeline(self):

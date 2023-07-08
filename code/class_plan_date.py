@@ -2,7 +2,10 @@ import datetime
 
 
 class PlanDate:
-
+    @staticmethod
+    def get_duration(start_date_str, end_date_str):
+        delta_datetime = PlanDate.str_date_parser(end_date_str) - PlanDate.str_date_parser(start_date_str)
+        return delta_datetime.days+1
     @staticmethod
     def str_date_parser(date_str):
         # date_str 형태 : 'YYYY-mm-dd'

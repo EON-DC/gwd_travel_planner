@@ -157,14 +157,17 @@ class DBConnector:
         plan_date = self.create_plan_date_obj(start_date_str, end_date_str)
         c = self.start_conn()
         last_row = c.execute('select * from tb_timeline order by id desc limit 1').fetchone()
-        last_id = last_row[0] + 1
+        if last_row is None:
+            last_id = 1
+        else:
+            last_id = last_row[0] + 1
         time_line = TimeLine(last_id, plan_date, location_list, username_str, trip_name)
         self.insert_timeline(time_line)
         """db에 등록하여 autoincrement된 id를 가진 timeline개체가 반환됨
         위에서 만든 plan_date 함수와 기존 insert timeline 함수를 활용하여 str과 location 개체만으로도 time_line_obj를 database에 등록할 수 있음"""
         created_timeline_row = c.execute('select * from tb_timeline order by id desc limit 1').fetchone()
-        # created_timeline_obj = PlanDate(created_timeline_row[0], created_timeline_row[1], created_timeline_row[2])
-        created_timeline_obj = TimeLine(*created_timeline_row)
+        t_id = created_timeline_row[0]
+        created_timeline_obj = self.find_timeline_by_id(t_id)
         self.end_conn()
         return created_timeline_obj
 
