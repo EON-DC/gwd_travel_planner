@@ -14,20 +14,27 @@ class RecallPreviousTrip(QWidget, Ui_recall_proevious_trip):
         self.schedule_list = list()  # 빈 리스트 선언해주기
 
         self.btn_back.mousePressEvent = lambda x: self.page_move("back")
-
-        self.load_saved_time_line()
-        self.import_save_trip()
+        self.init_layout()
 
     def page_move(self, btn):
         if btn == "back":
             print("이전")
             self.close()
 
-    def import_save_trip(self):
+    def show(self):
+        self.import_save_trip()
+        super().show()
+
+    def init_layout(self):
         layout = QBoxLayout(QBoxLayout.TopToBottom)
         viewer = self.listwidget_save_trip
         layout.addWidget(viewer)
         self.setLayout(layout)
+
+    def import_save_trip(self):
+        viewer = self.listwidget_save_trip
+        viewer.clear()
+        self.load_saved_time_line()
 
         for idx, saved_time_line_obj in enumerate(self.schedule_list):
             item = QListWidgetItem(viewer)
@@ -41,7 +48,7 @@ class RecallPreviousTrip(QWidget, Ui_recall_proevious_trip):
 
     def load_saved_time_line(self):
         self.schedule_list = self.main_window.db_connector.find_recent_timelines()
-
+        print("불러온 저장정보", self.schedule_list)
     # def test_init(self):
     #     self.add_list_saved_item("봄 감자가 맛있단다", "2023.07.03", "2023.07.08")
     #     self.add_list_saved_item("내 여름휴가는 어디에", "2023.08.03", "2023.08.08")

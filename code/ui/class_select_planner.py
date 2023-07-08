@@ -10,6 +10,9 @@ from ui.class_location_item import LocationItem
 # from ui_select_planner import Ui_select_planner
 from ui.ui_select_planner import Ui_select_planner
 
+# from class_rec_location_item import RecommendLocationItem
+from ui.class_rec_location_item import RecommendLocationItem
+
 from class_plan_date import PlanDate
 
 import random
@@ -26,7 +29,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.main_window = main_window
 
         self.schedule_list = list()
-        self.rec_location_obj_list_from_db = list()
+        # self.rec_location_obj_list_from_db = list()
 
         self.top_obj_list = [self.label_select_date, self.lineEdit_search, self.toolBtn_search]
         self.rec_btn_list = [self.btn_rec_attraction, self.btn_rec_hotel]
@@ -68,7 +71,9 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.lineEdit_search.setCompleter(completer)
 
         # self.test_init()
-        self.rec_location_obj_list_from_db = self.main_window.db_connector.get_recommended_attraction()
+        self.rec_location_obj_list_from_db = self.main_window.db_connector.find_all_location()
+        self.total_hotel = [x for x in self.rec_location_obj_list_from_db if x.category in ['0', 0, '숙소']]
+        self.total_attraction = [x for x in self.rec_location_obj_list_from_db if x.category in ['1', 1, '명소']]
         self.set_location_item_list()
         self.folium_factory = FoliumMapFactory()  # Folium 팩토리
         self.web_view = QWebEngineView(self)
@@ -78,6 +83,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         self.listWidget_select_list.itemPressed.connect(lambda x: self.read_schedule_item_list())
         # recommend widget 설정
         self.clear_recommend_widget_inner()
+        self.init_list_widget()
 
     # 캘린더 값을 받는 함수
     def set_plan_date(self, qdate_obj, option=None):
@@ -178,34 +184,52 @@ class SelectPlanner(QWidget, Ui_select_planner):
             self.label_schedule_name.setText("스케줄명")
 
     # 추천 장소 리스트 출력 함수 + 검색 결과 리스트 출력
-    def set_location_item_list(self):  # 주소 리스트위젯화
-        layout = QBoxLayout(QBoxLayout.TopToBottom)
-        rec_list_widget = self.listWidget_rec_location  # 리스트위젯 인스턴스화
-        layout.addWidget(rec_list_widget)
-        self.setLayout(layout)
+    def set_location_item_list(self, option=None):  # 주소 리스트위젯화
+        rec_list_widget = self.listWidget_rec_location
+        selected_list = list()
+        rec_list_widget.clear()
+        if option == 'attraction':
+            selected_list = self.total_attraction.copy()
+        elif option == 'hotel':
+            selected_list = self.total_hotel.copy()
+        else:
+            return
 
-        for idx, list_item in enumerate(self.rec_location_obj_list_from_db):
+        for idx, list_item in selected_list:
             item = QListWidgetItem(rec_list_widget)
             custom_widget = LocationItem(self, list_item)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
             rec_list_widget.setItemWidget(item, custom_widget)
             rec_list_widget.addItem(item)
 
-    # 선택한 일정 리스트 출력 함수
-    def set_schedule_item_list(self):  # todo: 타임라인에 맞춰 리스트화 시키기
-        self.listWidget_select_list.clear()
+    def init_list_widget(self):
         layout = QBoxLayout(QBoxLayout.TopToBottom)
         select_location_list_widget = self.listWidget_select_list  # 선택 목록 리스트위젯 인스턴스화
         layout.addWidget(select_location_list_widget)
         self.setLayout(layout)
+        layout = QBoxLayout(QBoxLayout.TopToBottom)
+        rec_list_widget = self.listWidget_rec_location  # 리스트위젯 인스턴스화
+        layout.addWidget(rec_list_widget)
+        self.setLayout(layout)
 
-        copy_schedule_list = self.schedule_list.copy()
+    # 선택한 일정 리스트 출력 함수
+    def set_schedule_item_list(self):  
+        self.listWidget_select_list.clear()
+        select_location_list_widget = self.listWidget_select_list
+
         duration = 1
         if self.main_window.start_date_str is not None and self.main_window.end_date_str is not None:
             duration = PlanDate.get_duration(self.main_window.start_date_str, self.main_window.end_date_str)
 
-        for i in range(duration, 0, -1):
-            copy_schedule_list.insert(0, i)
+        if len(self.schedule_list) != 0 and isinstance(self.schedule_list[0], list):  # 2중 리스트인 상태
+            copy_schedule_list = list()
+            for idx, list_ in enumerate(self.schedule_list):
+                copy_schedule_list.append(idx + 1)
+                copy_schedule_list.extend(list_)
+        else:
+            copy_schedule_list = self.schedule_list.copy()
+            for i in range(duration, 0, -1):
+                copy_schedule_list.insert(0, i)
 
         for idx, list_item in enumerate(copy_schedule_list):
             item = QListWidgetItem(select_location_list_widget)
@@ -235,6 +259,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
         result_list.append(temp_list)
         self.schedule_list.clear()
         self.schedule_list = result_list
+        if self.main_window.timeline is not None:
+            self.main_window.timeline.location_list = result_list
 
     def add_list_location_item(self, name, address, category):
         temp_list = [name, address, category]
@@ -249,17 +275,33 @@ class SelectPlanner(QWidget, Ui_select_planner):
             print("refresh 버튼을 클릭했습니다.")
 
     def clear_recommend_widget_inner(self):
-        layout = self.frame_rec_attraction.layout()
+        # for location in random.sample(self.rec_location_obj_list_from_db, 4):
+        #     layout.addWidget(RecommendLocationItem(self, location))
+
+
+        random_pick_hotel_location = random.sample(self.total_hotel, 4)
+        random_pick_attraction_location = random.sample(self.total_attraction, 4)
+
+        a_layout = self.frame_rec_attraction.layout()
         frame = self.frame_rec_attraction
-        while layout.count():
-            item = layout.takeAt(0)
+        while a_layout.count():
+            item = a_layout.takeAt(0)
             widget = item.widget()
             if widget:
                 widget.deleteLater()
 
-        for location in random.sample(self.rec_location_obj_list_from_db, 2):
-            layout.addWidget(LocationItem(self, location))
+        for location in random_pick_attraction_location:
+            a_layout.addWidget(RecommendLocationItem(self, location))
 
+        h_layout = self.frame_rec_hotel.layout()
+        frame = self.frame_rec_hotel
+        while h_layout.count():
+            item = h_layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+        for location in random_pick_hotel_location:
+            h_layout.addWidget(RecommendLocationItem(self, location))
 
     def page_move(self, btn):
         if btn == "back":
@@ -306,11 +348,12 @@ class SelectPlanner(QWidget, Ui_select_planner):
         if btn == "attraction":
             # print("추천 장소 리스트위젯")
             self.label_rec.setText("추천 장소")
+            self.set_location_item_list("attraction")
 
         elif btn == "hotel":
             # print("추천 호텔 리스트위젯")
             self.label_rec.setText("추천 호텔")
-
+            self.set_location_item_list("hotel")
     def save_schedule(self, btn):
         # mainwindow timeline obj 저장 로직
         self.read_schedule_item_list()
@@ -319,9 +362,12 @@ class SelectPlanner(QWidget, Ui_select_planner):
         s_date = self.main_window.start_date_str
         e_date = self.main_window.end_date_str
         t_name = self.main_window.trip_name
-        time_line = self.main_window.db_connector.create_time_line_obj(location_list,s_date, e_date, t_name)
-        self.main_window.timeline = time_line
-        print(time_line)
+        if hasattr(self.main_window.timeline, "time_line_id"):
+            self.main_window.db_connector.delete_timeline_by_id(self.main_window.timeline.time_line_id)
+            self.main_window.db_connector.insert_timeline(self.main_window.timeline)
+        else:
+            self.main_window.timeline = self.main_window.db_connector.create_time_line_obj(location_list, s_date,
+                                                                                           e_date, t_name)
 
         # db connector로 timeline obj 생성 및 main window 저장
 
@@ -335,6 +381,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
         self.main_window.first_trip.close()
         self.main_window.prev_trip.close()
+        self.main_window.initialize_variable()
         self.close()
 
     def move_to_edit_timeline(self):

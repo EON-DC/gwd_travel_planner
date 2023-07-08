@@ -20,7 +20,7 @@ class SaveScheduleItem(QWidget, Ui_save_schedule_item):
 
     def set_text_schedule(self):
         self.label_schedule_name.setText(f"{self.name}")
-        self.label_date.setText(f"{self.start_date} ~ {self.end_date}")
+        self.label_date.setText(f"{self.start_date.strftime('%Y-%m-%d')} ~ {self.end_date.strftime('%Y-%m-%d')}")
 
     def double_click_widget(self):
         print(f"{self.name}")

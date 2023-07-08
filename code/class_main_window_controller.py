@@ -26,7 +26,12 @@ class WindowController(QWidget):
         self.prev_trip = RecallPreviousTrip(self)  # 이전 여행 페이지
         self.select_planner = SelectPlanner(self)  # 스케줄러 페이지
 
-
+    def initialize_variable(self):
+        self.trip_name = None  # 여행 이름
+        self.plan_date = None
+        self.timeline = None
+        self.start_date_str = None
+        self.end_date_str = None
 
     def set_timeline(self, time_line_obj):
         if isinstance(time_line_obj, TimeLine):
@@ -36,10 +41,8 @@ class WindowController(QWidget):
             self.end_date_str = PlanDate.date_obj_to_str(time_line_obj.plan_date.end_date)
             self.trip_name = time_line_obj.trip_name
             # 리스트 수정
-            self.select_planner.schedule_list = list()
-            for row in time_line_obj.location_list:
-                for location in row:
-                    self.select_planner.schedule_list.append(location)
+            self.select_planner.schedule_list = time_line_obj.location_list.copy()
+
         else:
             QMessageBox.about(self, "알림", "이전 저장 정보를 불러오는데 실패했습니다.")
 

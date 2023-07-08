@@ -240,7 +240,7 @@ class DBConnector:
 
     def delete_timeline_by_id(self, timeline_id: int):
         c = self.start_conn()
-        cur = c.execute("delete from tb_timeline where id = ?", (timeline_id,))
+        c.execute("delete from tb_timeline where id = ?", (timeline_id,))
         self.commit_db()
         self.end_conn()
 
