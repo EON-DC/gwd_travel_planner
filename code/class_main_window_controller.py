@@ -41,7 +41,9 @@ class WindowController(QWidget):
             self.end_date_str = PlanDate.date_obj_to_str(time_line_obj.plan_date.end_date)
             self.trip_name = time_line_obj.trip_name
             # 리스트 수정
+            self.select_planner.snap_shot_list = time_line_obj.location_list.copy()
             self.select_planner.schedule_list = time_line_obj.location_list.copy()
+            self.select_planner.show_plan_date_title()
 
         else:
             QMessageBox.about(self, "알림", "이전 저장 정보를 불러오는데 실패했습니다.")

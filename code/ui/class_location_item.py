@@ -67,8 +67,6 @@ class LocationItem(QWidget, Ui_location_item):
     #         else:
     #             pass
 
-
-
     def show_context_menu(self, position):
         context_menu = QMenu(self)
         # Create actions for the context menu
@@ -78,5 +76,8 @@ class LocationItem(QWidget, Ui_location_item):
         context_menu.exec_(self.mapToGlobal(position))
 
     def handle_action1(self):
-        self.select_planner.schedule_list.append(self.location_obj)
-        print(self.select_planner.schedule_list)
+        if len(self.select_planner.schedule_list) != 0 and isinstance(self.select_planner.schedule_list[0], list):  # 2중 리스트인 상태
+            last_index = len(self.select_planner.schedule_list) - 1
+            self.select_planner.schedule_list[last_index].append(self.location_obj)
+        else:
+            self.select_planner.schedule_list.append(self.location_obj)

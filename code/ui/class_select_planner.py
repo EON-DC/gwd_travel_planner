@@ -85,6 +85,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
         # recommend widget 설정
         self.clear_recommend_widget_inner()
         self.init_list_widget()
+        # 복구용 스냅샷
+        self.snap_shot_list = None
 
     # 캘린더 값을 받는 함수
     def set_plan_date(self, qdate_obj, option=None):
@@ -197,7 +199,7 @@ class SelectPlanner(QWidget, Ui_select_planner):
         else:
             return
 
-        for idx, list_item in selected_list:
+        for idx, list_item in enumerate(selected_list):
             item = QListWidgetItem(rec_list_widget)
             custom_widget = LocationItem(self, list_item)
             item.setSizeHint(custom_widget.sizeHint())  # item에 custom_widget 사이즈 알려주기
@@ -226,8 +228,11 @@ class SelectPlanner(QWidget, Ui_select_planner):
         if len(self.schedule_list) != 0 and isinstance(self.schedule_list[0], list):  # 2중 리스트인 상태
             copy_schedule_list = list()
             for idx, list_ in enumerate(self.schedule_list):
-                copy_schedule_list.append(idx + 1)
-                copy_schedule_list.extend(list_)
+                if isinstance(list_, list):
+                    copy_schedule_list.append(idx + 1)
+                    copy_schedule_list.extend(list_)
+                else:
+                    copy_schedule_list.append(list_)
         else:
             copy_schedule_list = self.schedule_list.copy()
             for i in range(duration, 0, -1):
@@ -274,7 +279,8 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
     def set_refresh(self, btn):
         if btn == "refresh":
-            print("refresh 버튼을 클릭했습니다.")
+            self.schedule_list = self.snap_shot_list.copy()
+            self.set_schedule_item_list()
 
     def clear_recommend_widget_inner(self):
         # for location in random.sample(self.rec_location_obj_list_from_db, 4):
@@ -332,17 +338,19 @@ class SelectPlanner(QWidget, Ui_select_planner):
 
             # for top_obj in self.top_obj_list:
             #     top_obj.setVisible(True)
-            self.label_select_date.setVisible(True)
+            self.show_plan_date_title()
 
-            self.label_select_date.setText(f"{self.main_window.start_date_str} ~ {self.main_window.end_date_str}")
 
         elif btn == "move_list":
             self.stackedWidget.setCurrentIndex(3)
             # 스케줄 일정대로 위젯 생성
+            self.snap_shot_list = self.schedule_list.copy()
             self.set_schedule_item_list()
             for btn_hide in self.rec_btn_list:
                 btn_hide.setVisible(False)
-
+    def show_plan_date_title(self):
+        self.label_select_date.setVisible(True)
+        self.label_select_date.setText(f"{self.main_window.start_date_str} ~ {self.main_window.end_date_str}")
     def rec_change(self, btn):
         self.stackedWidget.setCurrentIndex(2)
 
@@ -394,5 +402,4 @@ class SelectPlanner(QWidget, Ui_select_planner):
         # for top_obj in self.top_obj_list:
         #     top_obj.setVisible(True)
         self.label_select_date.setVisible(True)
-
-        self.label_select_date.setText("yyyy.mm.dd ~ yyyy.mm.dd")
+        self.show_plan_date_title()

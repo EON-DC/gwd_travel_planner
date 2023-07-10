@@ -12,8 +12,8 @@ from class_csv_reader import CSVReader
 def main():
     app = QtWidgets.QApplication(sys.argv)
     dbconn = DBConnector()
-    dbconn.create_tables()  # 배포전 확인! 이 라인 삭제해야함
-    c_reader = CSVReader(dbconn)
+    # dbconn.create_tables()  # 배포전 확인! 이 라인 삭제해야함
+    # c_reader = CSVReader(dbconn)
 
     main_window = class_main_window_controller.WindowController(dbconn)
     main_window.start_page.show()
